@@ -7,28 +7,28 @@
 
 ## 阶段规划（7个phase）
 
-### Phase 0: 讨论与初始化 ⚙️
+### Phase 0: 讨论与初始化
 **目标：** 明确需求、建立评测体系
 **输出：** PROJECT.md, REQUIREMENTS.md, config.json
 
 | 任务 | 状态 |
 |------|------|
-| 需求澄清与确认 | ✅ 完成 |
-| 评测体系设计 | ✅ 完成 |
-| 项目初始化 | ✅ 完成 |
+| 需求澄清与确认 | 完成 |
+| 评测体系设计 | 完成 |
+| 项目初始化 | 完成 |
 
 ---
 
-### Phase 1: 搜索与发现 ✅
+### Phase 1: 搜索与发现
 **目标：** 收集所有可用科研skill仓库
 **输出：** SKILLS-INVENTORY.md（39个仓库）
 **状态：** 已完成（含Phase 1.5跨平台搜索的18个新增仓库）
 
 | 任务 | 状态 |
 |------|------|
-| 用户提供的14个skill溯源 | ✅ 完成 |
-| 图片提取skill溯源（~93个） | ✅ 完成 |
-| GitHub主动搜索补充 | ✅ 完成 |
+| 用户提供的14个skill溯源 | 完成 |
+| 图片提取skill溯源（~93个） | 完成 |
+| GitHub主动搜索补充 | 完成 |
 
 ---
 
@@ -38,7 +38,7 @@
 
 | 任务 | 状态 |
 |------|------|
-| 自主搜索GitHub补充仓库 | 🔜 下一步 |
+| 自主搜索GitHub补充仓库 | 下一步 |
 | 验证新发现仓库有效性 | 待开始 |
 | 更新仓库清单 | 待开始 |
 
@@ -46,13 +46,15 @@
 
 ### Phase 01.5.1: 评测方法预测试 (INSERTED)
 
-**Goal:** [Urgent work - to be planned]
-**Requirements**: TBD
+**Goal:** Validate and iterate the evaluation methodology by pre-testing on 10 representative samples, discover and fix scoring system issues, set decision thresholds and approval workflow nodes. Does NOT include full evaluation or skill installation.
+
 **Depends on:** Phase 1.5
-**Plans:** 0 plans
+**Plans:** 3 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 01.5.1 to break down)
+- [ ] 01.5.1-01-PLAN.md — Scoring methodology design: rubric (10 function types), TSV template (22 columns), exclusion reason template
+- [ ] 01.5.1-02-PLAN.md — Re-score 10 samples, produce new format evaluations + delta analysis with D-06 validation
+- [ ] 01.5.1-03-PLAN.md — Phase 2 methodology specification + final summary with go/no-go recommendation
 
 ### Phase 2: 安全初筛与功能评测
 **目标：** 对所有skill进行安全否决 + 功能评分
