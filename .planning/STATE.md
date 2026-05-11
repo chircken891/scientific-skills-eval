@@ -6,10 +6,10 @@ status: ready_to_plan
 last_updated: "2026-05-11T10:42:41.237Z"
 progress:
   total_phases: 9
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 6
   completed_plans: 1
-  percent: 17
+  percent: 11
 ---
 
 # 项目状态
