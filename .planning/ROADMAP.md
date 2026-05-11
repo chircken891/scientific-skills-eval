@@ -56,31 +56,41 @@ Plans:
 - [x] 01.5.1-02-PLAN.md — Re-score 10 samples, produce new format evaluations + delta analysis with D-06 validation
 - [x] 01.5.1-03-PLAN.md — Phase 2 methodology specification + final summary with go/no-go recommendation
 
-### Phase 2: 安全初筛与功能评测
-**目标：** 对所有skill进行安全否决 + 功能评分
-**输出：** 安全否决清单 + 每个skill评分卡
-**评测范围：** 39个仓库（Phase 1的21个 + Phase 1.5新增18个）
+### Phase 01.5.2: 评测调整 (INSERTED)
 
-**Plans:** 3 plans
+**Goal:** Address Phase 01.5.1 pre-test findings: verify ARIS/academic-writing borderline cases, identify weak repos for EXCLUDE threshold testing, identify security concern repos for veto workflow testing, update 9-sample scores with verified implementation data. All corrections done before Phase 2.
+
+**Depends on:** Phase 01.5.1
+**Plans:** 1 plan
 
 Plans:
-- [ ] 02-01-PLAN.md — 抽样验证（9个代表性仓库评测 + 用户阈值确认）
-- [ ] 02-02-PLAN.md — 全量执行（30个剩余仓库评测）
-- [ ] 02-03-PLAN.md — 矩阵输出（横向矩阵 + 推荐组合）
+- [ ] 01.5.2-01-PLAN.md — Verify borderline cases (ARIS, academic-writing) + identify weak/security repos + update 9-sample scores
+
+### Phase 2: 安全初筛与功能评测
+**目标：** 使用Phase 01.5.1验证的两阶段体系，对39个科研skill进行安全否决筛选和功能评分
+**输出：** 安全否决清单 + 评分卡 + 横向矩阵 + 推荐组合
+**评测范围：** 39个仓库
+**前置条件：** Phase 01.5.2完成（ARIS/academic-writing验证 + 弱能力仓库识别 + 安全问题仓库识别）
+
+**Plans:** 2 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — 合并预评分仓库(Phase 01.5.1/01.5.2) + 评测剩余仓库，使用两阶段体系(DepthScore 1-5)
+- [ ] 02-02-PLAN.md — 横向矩阵 + 分层推荐组合（按阈值分类排序）
 
 | 任务 | 状态 |
 |------|------|
-| 核心仓库安全审查（TOP 10） | 待开始 |
-| 安全一票否决检查 | 待开始 |
-| 功能维度评分（40%） | 待开始 |
-| 集成度评分（30%） | 待开始 |
-| 覆盖度评分（30%） | 待开始 |
+| Phase 01.5.1/01.5.2预评分合并 | 待开始 |
+| 剩余仓库安全否决检查 | 待开始 |
+| 剩余仓库功能深度评分(Tier 1) | 待开始 |
+| 剩余仓库集成度评分(Tier 2) | 待开始 |
+| 矩阵输出 | 待开始 |
+| 推荐组合生成 | 待开始 |
 
-**关键安全检查项：**
-- 数据安全（是否访问敏感数据）
-- 权限范围（是否申请过度权限）
-- 网络请求（是否有可疑外网通信）
-- 依赖来源（第三方依赖是否可信）
+**两阶段评测体系（Phase 01.5.1验证）：**
+- Tier 1: 专业深度评分(1-5)驱动决策 (<3.0 EXCLUDE / 3.0-4.0 CANDIDATE / >4.0 AUTO-RECOMMEND)
+- Tier 2: 集成度评分(5项各1-5) + 覆盖度描述
+- 安全否决独立于评分运行
 
 ---
 
