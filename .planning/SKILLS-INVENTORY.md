@@ -242,13 +242,20 @@
 | 46 | scholarlab | Autonomous Multi-Agent Academic Research Platform | (not verified) |
 | 47 | shuozhao-academic-skills | PPT generation, literature search, Zotero integration | (not verified) |
 
+### VS Code 扩展新增
+
+| # | 仓库 | 描述 | Stars | Topics | 发现方式 |
+|---|------|------|-------|--------|----------|
+| 48 | andre-inter-collab-llc/research-workflow-assistant | AI research assistant for VS Code + Copilot (PubMed, OpenAlex, Zotero MCP) | 16 | academic-writing, mcp-server, systematic-review | GitHub API (替代方案) |
+| 49 | pallaprolus/dev-scholar | Research workflow accelerator for academic citations | 4 | academic, citations, zotero | GitHub API (替代方案) |
+
 ### 搜索统计更新
 
 | 指标 | Phase 1 | Phase 1.5 | 合计 |
 |------|---------|-----------|------|
-| 仓库总数 | 21 | 23 (GitHub) + 4 (npm) = 27 | 48 |
-| 新增来源 | - | GitHub API + npm | - |
+| 仓库总数 | 21 | 14 (GitHub 8 + npm 4 + VS Code 2) | 35 |
+| 新增来源 | - | GitHub API + npm + VS Code (GitHub API替代) | - |
 | 高质量新增 (stars > 100) | - | 6 | - |
 | MCP 相关工具 | - | 8 | - |
 
-*最后更新: 2026-05-11 (Phase 1.5 跨平台搜索完成)*
+*最后更新: 2026-05-11 (Phase 1.5 跨平台搜索完成，含VS Code扩展)*
