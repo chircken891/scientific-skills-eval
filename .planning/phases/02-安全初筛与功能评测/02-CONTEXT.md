@@ -29,11 +29,12 @@
   - 依赖来源：第三方依赖是否可信
 - **D-06:** 任一项不合格 → 标记「否决 + 原因」，不进入组合候选
 
-### 评分体系
-- **D-07:** 评分粒度 — 多级评分（功能40%/集成度30%/覆盖度30%）
-- **D-08:** 功能维度（8项×5分）：核心能力、医学适配度、长文本适配、统计/数学能力、代码生成、工具调用效率、自主兜底、多模态
-- **D-09:** 集成度维度（5项×5分）：Claude Code集成难度、MCP兼容性、冲突风险、维护成本、上下文依赖
-- **D-10:** 覆盖度维度（4项×5分）：领域覆盖、科研阶段覆盖、互补性、冗余度
+### 评分体系（Phase 01.5.1 验证后的新体系）
+- **D-07:** 两阶段评估架构 — Tier 1 专业深度评分（1-5）驱动决策，Tier 2 描述性信息（集成度+覆盖度）用于组合决策
+- **D-08:** 功能维度 — 专业深度评分1-5（只评1-2个最佳功能，0.5递增，共9级）
+- **D-09:** 阈值映射 — <3.0 EXCLUDE / 3.0-4.0 CANDIDATE / >4.0 AUTO-RECOMMEND，边界包含
+- **D-10:** 覆盖度维度 — 描述性（不评分），记录Coverage_Stages + Coverage_Description
+- **D-11:** 集成度维度（保持评分）— 5项各1-5分，作为组合内排序次键
 
 ### 执行方式
 - **D-11:** 执行方式 — Claude执行检查，用户审核阈值是否合理，最终由用户做否决/通过决定
@@ -41,13 +42,16 @@
 ### 输出格式
 - **D-12:** 输出格式 — 评分卡 + 横向矩阵 + 推荐组合
 
+### Phase 01.5.1 验证成果
+- Phase 01.5.1 验证了D-06原则（medsci-skills #2→#1，paper-plot-skills +5位）
+- Phase 01.5.1 发现7个问题，其中3个MEDIUM优先级需在Phase 2中验证
+
 ### Claude's Discretion
 - 抽样顺序可按仓库质量/复杂度灵活调整
-- 阈值具体数值待Claude初筛后根据实际情况提出建议，用户确认
+- 必须包含刻意选择的低能力仓库测试EXCLUDE阈值（<3.0）
+- 必须包含有已知安全问题的仓库测试否决工作流
 
 </decisions>
-
-<canonical_refs>
 ## Canonical References
 
 **Downstream agents MUST read these before planning or implementing.**
@@ -57,7 +61,13 @@
 - `.planning/REQUIREMENTS.md` — 评测维度定义（安全/功能/集成度/覆盖度评分体系）
 - `.planning/PROJECT.md` — 项目目标与约束（安全一票否决等）
 
-### Phase 1.5 成果
+### Phase 01.5.1 方法论验证成果
+- `.planning/phases/01.5.1-评测方法预测试/01.5.1-METHODOLOGY-SPEC.md` — **Phase 2必须使用的新评分体系规范**
+- `.planning/phases/01.5.1-评测方法预测试/01.5.1-SCORING-RUBRIC.md` — 10种功能类型的1-5评分标准
+- `.planning/phases/01.5.1-评测方法预测试/01.5.1-SCORING-TEMPLATE.tsv` — 22列TSV模板
+- `.planning/phases/01.5.1-评测方法预测试/01.5.1-DELTA-ANALYSIS.md` — 7个Phase 2建议（含MEDIUM优先级验证项）
+
+### Phase 1.5 搜索成果
 - `.planning/phases/01.5-自主搜索仓库补充/01.5-CONTEXT.md` — 搜索范围与策略决策
 - `.planning/SKILLS-INVENTORY.md` — 39个仓库完整清单
 
@@ -71,8 +81,10 @@
 - SKILLS-INVENTORY.md的仓库分类可作为抽样分层依据
 
 ### Established Patterns
-- 安全一票否决：数据安全/权限范围/网络请求/依赖来源四项检查
-- 加权评分：功能40% + 集成度30% + 覆盖度30%
+- 安全一票否决：数据安全/权限范围/网络请求/依赖来源四项检查（独立于评分运行）
+- 两阶段评估：Tier 1专业深度评分(1-5)驱动决策，Tier 2描述性信息用于组合决策
+- 功能选择优先级：自声明专长 > 证据最充分 > 实现细节最具体
+- 阈值映射：<3.0 EXCLUDE / 3.0-4.0 CANDIDATE / >4.0 AUTO-RECOMMEND
 
 ### Integration Points
 - 评分卡输出需对接Phase 3的组合分析矩阵
