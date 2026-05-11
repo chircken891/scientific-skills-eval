@@ -49,11 +49,11 @@
 **Goal:** Validate and iterate the evaluation methodology by pre-testing on 10 representative samples, discover and fix scoring system issues, set decision thresholds and approval workflow nodes. Does NOT include full evaluation or skill installation.
 
 **Depends on:** Phase 1.5
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 
 Plans:
 - [x] 01.5.1-01-PLAN.md — Scoring methodology design: rubric (10 function types), TSV template (22 columns), exclusion reason template
-- [ ] 01.5.1-02-PLAN.md — Re-score 10 samples, produce new format evaluations + delta analysis with D-06 validation
+- [x] 01.5.1-02-PLAN.md — Re-score 10 samples, produce new format evaluations + delta analysis with D-06 validation
 - [ ] 01.5.1-03-PLAN.md — Phase 2 methodology specification + final summary with go/no-go recommendation
 
 ### Phase 2: 安全初筛与功能评测
