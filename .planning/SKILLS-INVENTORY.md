@@ -206,3 +206,49 @@
 ---
 
 *Last updated: 2026-05-11 after GitHub search phase 5 — 新增5个仓库，搜索饱和*
+
+---
+
+## Phase 1.5 新增仓库（跨平台搜索补充）
+
+### GitHub 新增（Phase 1.5 发现）
+
+| # | 仓库 | 描述 | Stars | Topics | 发现方式 |
+|---|------|------|-------|--------|----------|
+| 22 | affaan-m/everything-claude-code | Agent harness optimization with skills/instincts | 178,574 | ai-agents, claude-code, mcp | GitHub API search |
+| 23 | brycewang-stanford/Awesome-Agent-Skills-for-Empirical-Research | 23,000+ skills for 8 social science disciplines | 854 | academic-research, social-science | GitHub API search |
+| 24 | beita6969/ScienceClaw | 285 skills, self-evolving, zero hallucination | 626 | bioinformatics, literature-review, mcp | GitHub API search |
+| 25 | xjtulyc/MedgeClaw | 140 K-Dense scientific skills for biomedicine | 644 | (none) | GitHub API search |
+| 26 | Aperivue/medsci-skills | Medical research with PRISMA, STROBE, meta-analysis | 78 | clinical-research, medical-ai, prisma, strobe | GitHub API search |
+| 27 | Master-cai/Research-Paper-Writing-Skills | Skill package for ML/CV/NLP paper writing | - | claude, paper-writing | GitHub API search |
+| 28 | Seelly/scholar_mcp_server | Scholar MCP server | 12 | - | GitHub API search |
+| 29 | xingyulu23/Academix | Paper search MCP with academic-search topics | 7 | academic-search, paper-search-mcp | GitHub API search |
+
+### npm 包新增（已映射 GitHub 仓库）
+
+| # | npm 包 | GitHub 仓库 | 描述 | 发现方式 |
+|---|--------|-------------|------|----------|
+| 38 | grd-cli | Guiquan-27/get-research-done | Biomedical research lifecycle management | npm search |
+| 39 | scientify | tsingyuai/scientify | OpenClaw research workflow automation | npm search |
+| 40 | researchmcp | gyash1512/ResearchMCP | MCP for arXiv, Semantic Scholar, PubMed | npm search |
+| 41 | openalex-research-mcp | oksure/openalex-research-mcp | MCP for OpenAlex API - literature review | npm search |
+
+### MCP 服务器（相关工具）
+
+| # | 包名 | 描述 | GitHub |
+|---|------|------|--------|
+| 44 | @gonzih/research-rabbit | Searches 4 databases in parallel (ArXiv, Semantic Scholar, OpenAlex, PubMed) | (no homepage) |
+| 45 | @cyanheads/openalex-mcp-server | OpenAlex MCP server (270M+ publications) | (not verified) |
+| 46 | scholarlab | Autonomous Multi-Agent Academic Research Platform | (not verified) |
+| 47 | shuozhao-academic-skills | PPT generation, literature search, Zotero integration | (not verified) |
+
+### 搜索统计更新
+
+| 指标 | Phase 1 | Phase 1.5 | 合计 |
+|------|---------|-----------|------|
+| 仓库总数 | 21 | 23 (GitHub) + 4 (npm) = 27 | 48 |
+| 新增来源 | - | GitHub API + npm | - |
+| 高质量新增 (stars > 100) | - | 6 | - |
+| MCP 相关工具 | - | 8 | - |
+
+*最后更新: 2026-05-11 (Phase 1.5 跨平台搜索完成)*
