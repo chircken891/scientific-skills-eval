@@ -1,0 +1,10 @@
+Repo	Domain	数据安全	权限范围	网络请求	依赖来源	SecurityVerdict	核心能力	医学适配度	长文本适配	统计/数学	代码生成	工具效率	自主兜底	多模态	功能小计	集成难度	MCP兼容	冲突风险	维护成本	上下文依赖	集成度小计	领域覆盖	阶段覆盖	互补性	冗余度	覆盖度小计	加权总分
+ARIS	文献检索	PASS	PASS	PASS	PASS	APPROVED	5	2	4	2	4	4	3	2	29	3	3	3	5	3	17	2	5	4	5	16	62
+AI-Powered-Literature-Review-Skills	文献综述	PASS	PASS	PASS	PASS	APPROVED	5	2	4	1	1	4	3	2	26	3	4	2	3	3	15	2	5	4	3	14	55
+academic-writing-skills	学术写作	PASS	PASS	PASS	PASS	APPROVED	4	2	5	2	2	3	4	2	26	4	2	3	4	5	18	2	4	4	5	15	59
+nature-skills	Nature系列	PASS	PASS	PASS	PASS	APPROVED	5	3	4	2	3	4	3	4	24	4	2	3	4	6	19	4	4	4	5	17	60
+scientific-agent-skills	数据分析	PASS	PASS	PASS	PASS	APPROVED	5	4	4	4	4	4	4	4	33	4	4	2	5	6	21	5	4	5	4	22	76
+citation-assistant	引用管理	PASS	PASS	PASS	PASS	APPROVED	4	2	3	1	1	4	2	1	19	4	2	4	3	3	16	2	3	4	4	13	48
+paper-plot-skills	图表生成	PASS	PASS	PASS	PASS	APPROVED	5	2	2	3	4	3	2	5	22	4	2	3	4	5	17	3	2	4	5	14	53
+AI-Research-SKILLs	科研工具	PASS	PASS	PASS	PASS	APPROVED	5	2	4	3	4	4	4	3	27	4	4	2	4	5	19	3	5	4	4	20	66
+medsci-skills	医学专用	PASS	PASS	PASS	PASS	APPROVED	5	5	3	5	4	3	3	2	31	4	2	4	4	4	18	5	5	4	4	22	71
