@@ -61,10 +61,10 @@ Plans:
 **Goal:** Address Phase 01.5.1 pre-test findings: verify ARIS/academic-writing borderline cases, identify weak repos for EXCLUDE threshold testing, identify security concern repos for veto workflow testing, update 9-sample scores with verified implementation data. All corrections done before Phase 2.
 
 **Depends on:** Phase 01.5.1
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
-- [ ] 01.5.2-01-PLAN.md — Verify borderline cases (ARIS, academic-writing) + identify weak/security repos + update 9-sample scores
+- [x] 01.5.2-01-PLAN.md — Verify borderline cases (ARIS, academic-writing) + identify weak/security repos + update 9-sample scores
 
 ### Phase 2: 安全初筛与功能评测
 **目标：** 使用Phase 01.5.1验证的两阶段体系，对39个科研skill进行安全否决筛选和功能评分
