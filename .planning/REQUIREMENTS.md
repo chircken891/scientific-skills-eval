@@ -172,22 +172,29 @@
 
 | 阶段 | 内容 | 输出 |
 |------|------|------|
-| Phase 1 | 安全初筛 | 安全否决清单 |
-| Phase 2 | 功能+集成度+覆盖度评测 | 每个skill评分卡 |
+| Phase 0 | 讨论与初始化 | PROJECT.md, REQUIREMENTS.md, config.json |
+| Phase 1 | 搜索与发现 | SKILLS-INVENTORY.md |
+| Phase 1.5 | 自主搜索仓库补充 | 更新的SKILLS-INVENTORY.md |
+| Phase 2 | 安全+功能评测 | 安全否决清单 + 评分卡 |
 | Phase 3 | 组合分析 | 互补/冗余矩阵 |
 | Phase 4 | 最优组合生成 | 组合方案 |
-| Phase 5 | 集成 | 实际集成到Claude Code |
+| Phase 5 | 集成与验证 | 可用skill配置 + 验证报告 |
+| Phase 6 | 持续优化 | 优化建议 + 新增推荐 |
 
 ---
 
 ## 追踪
 
 - 总计待评测：~107个
-- Phase 1 安全否决：0
-- Phase 2 评测完成：0
+- Phase 0 初始化：✅ 完成
+- Phase 1 搜索：✅ 完成
+- Phase 1.5 自主搜索补充：待开始
+- Phase 2 安全否决：pending
+- Phase 2 评测完成：pending
 - Phase 3 组合分析：pending
 - Phase 4 最优组合：pending
 - Phase 5 集成完成：pending
+- Phase 6 优化：pending
 
 ---
 *Last updated: 2026-05-11 after full skill inventory from 9 images*
