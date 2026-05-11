@@ -2,13 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-last_updated: "2026-05-11T05:37:09.023Z"
+status: ready_to_plan
+last_updated: "2026-05-11T08:48:50.935Z"
 progress:
-  total_phases: 8
+  total_phases: 9
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 3
+  completed_plans: 1
+  percent: 33
 ---
 
 # 项目状态
@@ -30,7 +31,7 @@ progress:
 
 ## 当前阶段
 
-**Phase 2: 安全+功能评测** — 进行中 🔜
+**Phase 01.5.1: 评测方法预测试** — 待规划 🔜
 
 ---
 
@@ -72,6 +73,7 @@ progress:
 ## Roadmap Evolution
 
 - Phase 7 added: 自主搜索仓库补充Phase（用户期望为Phase 1.5，但GSD仅支持整数phase）
+- Phase 01.5.1 inserted: 评测方法预测试（用于迭代优化评分体系）
 
 ---
 

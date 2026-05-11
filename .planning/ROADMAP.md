@@ -21,8 +21,8 @@
 
 ### Phase 1: 搜索与发现 ✅
 **目标：** 收集所有可用科研skill仓库
-**输出：** SKILLS-INVENTORY.md（21个仓库）
-**状态：** 已完成
+**输出：** SKILLS-INVENTORY.md（39个仓库）
+**状态：** 已完成（含Phase 1.5跨平台搜索的18个新增仓库）
 
 | 任务 | 状态 |
 |------|------|
@@ -44,9 +44,27 @@
 
 ---
 
+### Phase 01.5.1: 评测方法预测试 (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phase 1.5
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 01.5.1 to break down)
+
 ### Phase 2: 安全初筛与功能评测
 **目标：** 对所有skill进行安全否决 + 功能评分
 **输出：** 安全否决清单 + 每个skill评分卡
+**评测范围：** 39个仓库（Phase 1的21个 + Phase 1.5新增18个）
+
+**Plans:** 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — 抽样验证（9个代表性仓库评测 + 用户阈值确认）
+- [ ] 02-02-PLAN.md — 全量执行（30个剩余仓库评测）
+- [ ] 02-03-PLAN.md — 矩阵输出（横向矩阵 + 推荐组合）
 
 | 任务 | 状态 |
 |------|------|
