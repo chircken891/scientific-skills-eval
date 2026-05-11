@@ -253,9 +253,9 @@
 
 | 指标 | Phase 1 | Phase 1.5 | 合计 |
 |------|---------|-----------|------|
-| 仓库总数 | 21 | 14 (GitHub 8 + npm 4 + VS Code 2) | 35 |
+| 仓库总数 | 21 | 18 (GitHub 8 + npm 4 + MCP 4 + VS Code 2) | 39 |
 | 新增来源 | - | GitHub API + npm + VS Code (GitHub API替代) | - |
 | 高质量新增 (stars > 100) | - | 6 | - |
-| MCP 相关工具 | - | 8 | - |
+| MCP 相关工具 | - | 4 | - |
 
 *最后更新: 2026-05-11 (Phase 1.5 跨平台搜索完成，含VS Code扩展)*
