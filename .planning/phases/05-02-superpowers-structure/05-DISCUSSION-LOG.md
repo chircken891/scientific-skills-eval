@@ -4,74 +4,92 @@
 > Decisions are captured in CONTEXT.md — this log preserves the alternatives considered.
 
 **Date:** 2026-05-12
-**Phase:** 5-02-superpowers-structure
-**Areas discussed:** 集合包结构, 触发条件设计, Skill依赖图, 能力边界定义
+**Phase:** 5-集成与验证
+**Areas discussed:** 05-02集合包结构, 05-03功能测试指南, 05-04工作流测试, 05-05验证报告
 
 ---
 
-## 集合包结构
+## Phase 5-02: 集合包结构（已在前一轮讨论）
 
-| Option | Description | Selected |
-|--------|-------------|----------|
-| 标准插件结构 | hooks/ + skills/ + CLAUDE.md + README.md | |
-| 扁平结构 | 所有skills在同一目录，不用子目录 | |
-| 分层结构 | 按workflow分目录（research/planning/execute） | |
-| superpowers风格 | superpowers的结构，hooks/ + skills/ + CLAUDE.md | ✓ |
-
-**User's choice:** superpowers风格
-**Notes:** 按最优的来，类似于superpowers和gsd
+见上一份DISCUSSION-LOG.md
 
 ---
 
-## 触发条件设计
+## Phase 5-03: 功能测试指南
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| 场景精确匹配 | 每个skill的description精确描述触发场景 | |
-| 模糊匹配 | 模糊匹配 + 优先级排序 | |
-| 精确+模糊fallback | 精确优先，但精确没命中时fallback模糊 | ✓ |
+| 每个skill一个冒烟测试 | 每个skill一个测试用例，验证核心功能 | |
+| 按workflow分阶段测试 | 按工作流顺序，每个阶段一个测试 | |
+| 完整测试套件 | 冒烟测试 + 边界情况 + 异常处理 | ✓ |
 
-**User's choice:** 精确+模糊fallback
+**User's choice:** 完整测试套件
 
 ---
 
-## Skill依赖图
-
 | Option | Description | Selected |
 |--------|-------------|----------|
-| 单向线性依赖 | research → planning → discuss → execute | |
-| 星形（中央协调） | 有一个中央协调器决定调用哪个skill | |
-| 链+独立混合 | 每个skill既可独立使用，又可组合成链 | |
+| 手动测试 | Markdown格式的测试步骤文档 | |
+| 自动化脚本 | 自动化脚本，自动运行测试用例 | |
+| 混合模式 | 手动测试 + 自动化验证脚本 | ✓ |
 
-**User's choice:** 独立+顺序+中央协调
-**Notes:** 用户澄清：星形模式有一个中央协调器，所有skill围绕它。用户想要独立+顺序+中央协调三种模式结合。
+**User's choice:** 混合模式
 
 ---
 
-## 能力边界
-
 | Option | Description | Selected |
 |--------|-------------|----------|
-| 关键节点HARD-GATE | 规划前必须研究、写作前必须设计、执行前必须确认 | ✓ |
-| 全量HARD-GATE | 所有决策点都加阻断 | |
-| 仅关键HARD-GATE | 只在必要时阻断，其他由协调器决定 | |
+| 100%通过 | 所有测试通过才算成功 | ✓ |
+| 80%阈值 | 80%以上通过即可（有记录） | |
+| 核心必须通过 | 核心功能必须通过，可选功能允许失败 | |
 
-**User's choice:** 关键节点HARD-GATE
+**User's choice:** 100%通过
 
 ---
 
-## 中央协调器
+## Phase 5-04: 工作流测试
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| scientific-router | 科研助手路由，协调科研工作流 | |
-| scientific-navigator | 科研导航，根据任务类型导向正确skill | |
-| scientific-workflow | 科研工作流编排，协调各skill | |
-| scientific-orchestrator | 科研编排器，协调多个skill执行 | |
-| scientific-do | 功能类似gsd-do | ✓ |
+| 完整场景测试 | 从用户输入到最终输出的完整路径测试 | |
+| 科研流程测试 | 文献→分析→写作→投稿的线性流程 | |
+| 完整+科研流程 | 两种都用 | ✓ |
 
-**User's choice:** scientific-do
-**Notes:** 不要叫gsd-do这个名字，只是功能相同
+**User's choice:** 完整+科研流程
+
+---
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| scientific-do协调 | 测试scientific-do能否正确协调7个skill | |
+| 数据传递 | 测试skill间数据传递是否正常 | |
+| 冲突处理 | 测试多个skill同时调用是否冲突 | |
+| 全部测试 | 三个都测试 | ✓ |
+
+**User's choice:** 全部测试
+
+---
+
+## Phase 5-05: 验证报告
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Markdown报告 | Markdown格式，可读性好 | ✓ |
+| 自动化报告 | 自动化汇总脚本，生成摘要 | |
+| 混合报告 | 核心摘要 + 详细数据附件 | |
+
+**User's choice:** Markdown报告
+
+---
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| 执行摘要 | 5个sub-plan的执行情况 | ✓ |
+| 测试结果汇总 | 每个skill的测试结果 | ✓ |
+| 问题与解决 | 遇到的问题及解决方案 | ✓ |
+| 验收确认 | 验收标准达成情况 | ✓ |
+
+**User's choice:** 执行摘要 + 测试结果汇总 + 问题与解决 + 验收确认
 
 ---
 
