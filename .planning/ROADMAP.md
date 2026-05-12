@@ -158,7 +158,7 @@ Plans:
 **Plans:** 5 plans in 3 waves
 
 Plans:
-- [ ] 07-01-PLAN.md — Wave 0: Verification scripts (07-VERIFY.sh) + performance benchmark tool (P6-E01)
+- [x] 07-01-PLAN.md — Wave 0: Verification scripts (07-VERIFY.sh) + performance benchmark tool (P6-E01)
 - [ ] 07-02-PLAN.md — Wave 1: SKILL.md frontmatter schema (triggers, model, exclude_when) + config files
 - [ ] 07-03-PLAN.md — Wave 2: Scientific-do coordinator enhancement (intent detection, verification, feedback, extension)
 - [ ] 07-04-PLAN.md — Wave 2: Update check (GitHub API) + skill discovery scripts (Phase 2 thresholds)
