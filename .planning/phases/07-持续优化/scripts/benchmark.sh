@@ -100,7 +100,7 @@ for i in "${!SKILL_NAMES[@]}"; do
   echo "=== Benchmarking: $name ==="
   row=$(bench_skill "$name" "$query")
   # Extract only the TSV row (last line of output that starts with skill name)
-  tsv_line=$(echo "$row" | grep "^${name}\s")
+  tsv_line=$(echo "$row" | grep "^${name}[[:space:]]")
   if [ -n "$tsv_line" ]; then
     TSV_ROWS="${TSV_ROWS}${tsv_line}"$'\n'
   fi
