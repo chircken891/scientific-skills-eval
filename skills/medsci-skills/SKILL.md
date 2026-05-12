@@ -1,6 +1,24 @@
 ---
 name: medsci-skills
 description: "Use when conducting medical research, applying PRISMA/STROBE guidelines, performing medical statistics, or writing clinical studies"
+version: 2
+triggers:
+  keywords:
+    - "medical research"
+    - "clinical study"
+    - "PRISMA"
+    - "STROBE"
+    - "流行病学"
+    - "医学研究"
+  scenarios:
+    - "clinical research compliance"
+    - "systematic review PRISMA"
+    - "medical statistics"
+  exclude_when:
+    - "general literature search"
+    - "non-medical writing"
+    - "general figure generation"
+model: claude-sonnet-4-20250514
 ---
 
 # Medical Science Skills

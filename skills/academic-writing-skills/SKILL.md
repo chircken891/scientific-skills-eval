@@ -1,6 +1,23 @@
 ---
 name: academic-writing-skills
 description: "Use when writing academic papers, preparing manuscripts, formatting with LaTeX/Typst/Word, or structuring research documents"
+version: 2
+triggers:
+  keywords:
+    - "write paper"
+    - "draft manuscript"
+    - "LaTeX"
+    - "学术写作"
+    - "paper formatting"
+  scenarios:
+    - "manuscript drafting"
+    - "document formatting"
+    - "multi-round revision"
+  exclude_when:
+    - "data analysis"
+    - "literature search"
+    - "figure creation"
+model: claude-sonnet-4-20250514
 ---
 
 # Academic Writing Skills

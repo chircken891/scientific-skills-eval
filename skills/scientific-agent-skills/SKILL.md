@@ -1,6 +1,24 @@
 ---
 name: scientific-agent-skills
 description: "Use when conducting scientific research, performing data analysis, applying statistical methods, or executing research workflows"
+version: 2
+triggers:
+  keywords:
+    - "data analysis"
+    - "statistical test"
+    - "research workflow"
+    - "compute results"
+    - "regression"
+    - "数据分析"
+  scenarios:
+    - "quantitative data analysis"
+    - "statistical methodology"
+    - "research computation"
+  exclude_when:
+    - "literature search"
+    - "paper writing"
+    - "figure generation"
+model: claude-sonnet-4-20250514
 ---
 
 # Scientific Agent Skills - Research Methodology

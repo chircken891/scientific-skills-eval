@@ -1,6 +1,23 @@
 ---
 name: Paper-Polish-Workflow-skill
 description: "Use when polishing papers for submission, checking language quality, preparing for journal submission, or finalizing manuscripts"
+version: 2
+triggers:
+  keywords:
+    - "polish paper"
+    - "submission ready"
+    - "check language"
+    - "de-AI"
+    - "润色"
+  scenarios:
+    - "pre-submission polishing"
+    - "language quality check"
+    - "de-AI-ification"
+  exclude_when:
+    - "writing new content"
+    - "data analysis"
+    - "literature search"
+model: claude-sonnet-4-20250514
 ---
 
 # Paper Polish Workflow

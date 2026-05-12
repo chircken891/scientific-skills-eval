@@ -1,6 +1,23 @@
 ---
 name: paper-plot-skills
 description: "Use when creating scientific figures, generating charts, making plots from data, or preparing publication-quality visualizations"
+version: 2
+triggers:
+  keywords:
+    - "create figure"
+    - "make plot"
+    - "generate chart"
+    - "visualize data"
+    - "图表生成"
+  scenarios:
+    - "publication figure creation"
+    - "data visualization"
+    - "plot from image"
+  exclude_when:
+    - "statistical analysis"
+    - "paper writing"
+    - "literature review"
+model: claude-sonnet-4-20250514
 ---
 
 # Paper Plot Skills - Figure Generation

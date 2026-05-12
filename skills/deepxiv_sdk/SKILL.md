@@ -1,6 +1,25 @@
 ---
 name: deepxiv_sdk
 description: "Use when searching for academic papers, finding literature, exploring arXiv/PubMed, or needing to review related research"
+version: 2
+triggers:
+  keywords:
+    - "search literature"
+    - "find papers"
+    - "arXiv"
+    - "PubMed"
+    - "related work"
+    - "文献检索"
+    - "文献综述"
+  scenarios:
+    - "literature review stage"
+    - "related work section writing"
+    - "systematic review setup"
+  exclude_when:
+    - "writing methodology section"
+    - "performing statistical analysis"
+    - "generating figures"
+model: claude-sonnet-4-20250514
 ---
 
 # DeepXiv SDK - Literature Search

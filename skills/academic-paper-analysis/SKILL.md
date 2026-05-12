@@ -1,6 +1,23 @@
 ---
 name: academic-paper-analysis
 description: "Use when analyzing existing academic papers, extracting methodology, evaluating paper quality, or understanding research approaches"
+version: 2
+triggers:
+  keywords:
+    - "analyze paper"
+    - "paper methodology"
+    - "extract findings"
+    - "paper critique"
+    - "论文分析"
+  scenarios:
+    - "paper reading and understanding"
+    - "methodology evaluation"
+    - "literature comparison"
+  exclude_when:
+    - "searching for papers"
+    - "writing new content"
+    - "generating figures"
+model: claude-sonnet-4-20250514
 ---
 
 # Academic Paper Analysis
