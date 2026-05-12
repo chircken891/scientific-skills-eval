@@ -1,174 +1,43 @@
 # 科研Skill评测项目 — 路线图
 
-## 目标
-系统化评测与整合最优科研skill组合，集成到Claude Code，形成完整的医学科研工作流。
+## Milestones
+
+- ✅ **v1.0 科研Skill评测与集成** — Phases 0-7 (shipped 2026-05-12)
+
+## Phases
+
+<details>
+<summary>✅ v1.0 科研Skill评测与集成 (Phases 0-7) — SHIPPED 2026-05-12</summary>
+
+- [x] Phase 0: 讨论与初始化 — completed 2026-05-11
+- [x] Phase 1: 搜索与发现 — completed 2026-05-11
+- [x] Phase 01.5: 自主搜索仓库补充 (1/1 plan) — completed 2026-05-11
+- [x] Phase 01.5.1: 评测方法预测试 (3/3 plans) — completed 2026-05-12
+- [x] Phase 01.5.2: 评测调整 (1/1 plan) — completed 2026-05-12
+- [x] Phase 02: 安全初筛与功能评测 (3/3 plans) — completed 2026-05-12
+- [x] Phase 03: 组合分析 (2/2 plans) — completed 2026-05-12
+- [x] Phase 04: 最优组合生成 (1/1 plan) — completed 2026-05-12
+- [x] Phase 05: 集成与验证 (6/6 plans) — completed 2026-05-12
+- [x] Phase 06: 测试执行 (4/4 plans) — completed 2026-05-12
+- [x] Phase 07: 持续优化 (5/5 plans) — completed 2026-05-12
+
+</details>
+
+## Progress
+
+| Phase | Milestone | Plans Complete | Status | Completed |
+|-------|-----------|----------------|--------|-----------|
+| 0. 讨论与初始化 | v1.0 | — | Complete | 2026-05-11 |
+| 01.5. 自主搜索仓库补充 | v1.0 | 1/1 | Complete | 2026-05-11 |
+| 01.5.1. 评测方法预测试 | v1.0 | 3/3 | Complete | 2026-05-12 |
+| 01.5.2. 评测调整 | v1.0 | 1/1 | Complete | 2026-05-12 |
+| 02. 安全初筛与功能评测 | v1.0 | 3/3 | Complete | 2026-05-12 |
+| 03. 组合分析 | v1.0 | 2/2 | Complete | 2026-05-12 |
+| 04. 最优组合生成 | v1.0 | 1/1 | Complete | 2026-05-12 |
+| 05. 集成与验证 | v1.0 | 6/6 | Complete | 2026-05-12 |
+| 06. 测试执行 | v1.0 | 4/4 | Complete | 2026-05-12 |
+| 07. 持续优化 | v1.0 | 5/5 | Complete | 2026-05-12 |
 
 ---
 
-## 阶段规划（8个phase）
-
-### Phase 0: 讨论与初始化
-**目标：** 明确需求、建立评测体系
-**输出：** PROJECT.md, REQUIREMENTS.md, config.json
-
-| 任务 | 状态 |
-|------|------|
-| 需求澄清与确认 | 完成 |
-| 评测体系设计 | 完成 |
-| 项目初始化 | 完成 |
-
----
-
-### Phase 1: 搜索与发现
-**目标：** 收集所有可用科研skill仓库
-**输出：** SKILLS-INVENTORY.md（39个仓库）
-**状态：** 已完成（含Phase 1.5跨平台搜索的18个新增仓库）
-
-| 任务 | 状态 |
-|------|------|
-| 用户提供的14个skill溯源 | 完成 |
-| 图片提取skill溯源（~93个） | 完成 |
-| GitHub主动搜索补充 | 完成 |
-
----
-
-### Phase 1.5: 自主搜索仓库补充
-**目标：** 补充发现更多科研skill仓库
-**输出：** 更新SKILLS-INVENTORY.md
-
-| 任务 | 状态 |
-|------|------|
-| 自主搜索GitHub补充仓库 | 下一步 |
-| 验证新发现仓库有效性 | 待开始 |
-| 更新仓库清单 | 待开始 |
-
----
-
-### Phase 01.5.1: 评测方法预测试 (INSERTED)
-
-**Goal:** Validate and iterate the evaluation methodology by pre-testing on 10 representative samples, discover and fix scoring system issues, set decision thresholds and approval workflow nodes. Does NOT include full evaluation or skill installation.
-
-**Depends on:** Phase 1.5
-**Plans:** 3/3 plans complete
-
-Plans:
-- [x] 01.5.1-01-PLAN.md — Scoring methodology design: rubric (10 function types), TSV template (22 columns), exclusion reason template
-- [x] 01.5.1-02-PLAN.md — Re-score 10 samples, produce new format evaluations + delta analysis with D-06 validation
-- [x] 01.5.1-03-PLAN.md — Phase 2 methodology specification + final summary with go/no-go recommendation
-
-### Phase 01.5.2: 评测调整 (INSERTED)
-
-**Goal:** Address Phase 01.5.1 pre-test findings: verify ARIS/academic-writing borderline cases, identify weak repos for EXCLUDE threshold testing, identify security concern repos for veto workflow testing, update 9-sample scores with verified implementation data. All corrections done before Phase 2.
-
-**Depends on:** Phase 01.5.1
-**Plans:** 1/1 plans complete
-
-Plans:
-- [x] 01.5.2-01-PLAN.md — Verify borderline cases (ARIS, academic-writing) + identify weak/security repos + update 9-sample scores
-
-### Phase 2: 安全初筛与功能评测
-**目标：** 使用Phase 01.5.1验证的两阶段体系，对39个科研skill进行安全否决筛选和功能评分
-**输出：** 安全否决清单 + 评分卡 + 横向矩阵 + 推荐组合
-**评测范围：** 39个仓库
-**前置条件：** Phase 01.5.2完成（ARIS/academic-writing验证 + 弱能力仓库识别 + 安全问题仓库识别）
-
-**Plans:** 2 plans
-
-Plans:
-- [ ] 02-01-PLAN.md — 合并预评分仓库(Phase 01.5.1/01.5.2) + 评测剩余仓库，使用两阶段体系(DepthScore 1-5)
-- [ ] 02-02-PLAN.md — 横向矩阵 + 分层推荐组合（按阈值分类排序）
-
-| 任务 | 状态 |
-|------|------|
-| Phase 01.5.1/01.5.2预评分合并 | 待开始 |
-| 剩余仓库安全否决检查 | 待开始 |
-| 剩余仓库功能深度评分(Tier 1) | 待开始 |
-| 剩余仓库集成度评分(Tier 2) | 待开始 |
-| 矩阵输出 | 待开始 |
-| 推荐组合生成 | 待开始 |
-
-**两阶段评测体系（Phase 01.5.1验证）：**
-- Tier 1: 专业深度评分(1-5)驱动决策 (<3.0 EXCLUDE / 3.0-4.0 CANDIDATE / >4.0 AUTO-RECOMMEND)
-- Tier 2: 集成度评分(5项各1-5) + 覆盖度描述
-- 安全否决独立于评分运行
-
----
-
-### Phase 3: 组合分析
-**目标：** 分析skill间的互补性和冗余度
-**输出：** 互补/冗余矩阵
-
-| 任务 | 状态 |
-|------|------|
-| 功能互补分析 | 待开始 |
-| 冗余度评估 | 待开始 |
-| 冲突风险识别 | 待开始 |
-
----
-
-### Phase 4: 最优组合生成
-**目标：** 生成最优组合方案
-**输出：** 组合方案 + 推荐理由
-
-| 任务 | 状态 |
-|------|------|
-| 核心组合确定 | 待开始 |
-| 扩展组合方案 | 待开始 |
-| 手动封装候选标注 | 待开始 |
-
----
-
-### Phase 5: 集成与验证
-**目标：** 实际集成到Claude Code环境
-**输出：** 可用skill配置 + 验证报告
-**状态：** ✅ 已完成
-
-| 任务 | 状态 |
-|------|------|
-| 安装核心Skill（已安装→移动/配置，未安装→安装） | ✅ 完成 |
-| 创建集合包（scientific-skills） | ✅ 完成 |
-| 制作scientific-do协调器 | ✅ 完成 |
-| 功能测试指南 | ✅ 完成 |
-| 工作流验证 | ✅ 完成 |
-| 最终报告 | ✅ 完成 |
-
----
-
-### Phase 6: 测试执行 ✅
-**目标：** 执行Phase 5创建的测试文档，验证skill功能
-**输出：** 测试结果 + 问题清单 + 问题修复
-**状态：** ✅ 已完成 (2026-05-12)
-
-| 任务 | 状态 |
-|------|------|
-| 功能测试执行（7个核心Skill冒烟测试） | ✅ 完成 (16/16 PASS) |
-| Scientific-Do协调器测试 | ✅ 完成 |
-| 端到端工作流测试（4场景） | ✅ 完成 |
-| 测试问题汇总与修复计划 | ✅ 完成 |
-| 源库审计（6个skill修复） | ✅ 完成 |
-
-**Phase 6 Final:** 16/16 PASS (100%), Critical: 0, 5个skill安装修复
-
----
-
-### Phase 7: 持续优化
-**目标：** 跟踪已安装skill的实际效果，持续改进
-**输出：** 优化建议 + 新增skill补充
-**状态：** 规划中
-**Plans:** 5 plans in 3 waves
-
-Plans:
-- [x] 07-01-PLAN.md — Wave 0: Verification scripts (07-VERIFY.sh) + performance benchmark tool (P6-E01)
-- [x] 07-02-PLAN.md — Wave 1: SKILL.md frontmatter schema (triggers, model, exclude_when) + config files
-- [x] 07-03-PLAN.md — Wave 2: Scientific-do coordinator enhancement (intent detection, verification, feedback, extension)
-- [x] 07-04-PLAN.md — Wave 2: Update check (GitHub API) + skill discovery scripts (Phase 2 thresholds)
-- [x] 07-05-PLAN.md — Wave 3: Gap detection + benchmark execution + final verification checkpoint
-
----
-
-## 成功标准
-
-- 所有核心科研场景（流病/生统/肿瘤）有skill覆盖
-- 无安全否决项
-- 功能强大且不冗余
-- 可实际集成运行
+See `.planning/milestones/v1.0-ROADMAP.md` for full phase details.

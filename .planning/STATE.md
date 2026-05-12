@@ -2,14 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: milestone_complete
-last_updated: "2026-05-12T09:53:26.138Z"
+status: Awaiting next milestone
+last_updated: "2026-05-12T11:15:45.759Z"
+last_activity: 2026-05-12 — Milestone v1.0 completed and archived
 progress:
   total_phases: 11
   completed_phases: 7
   total_plans: 30
-  completed_plans: 21
-  percent: 64
+  completed_plans: 26
+  percent: 87
 ---
 
 # 项目状态
@@ -101,4 +102,26 @@ progress:
 
 ---
 
+## Deferred Items
+
+Items acknowledged and deferred at milestone close on 2026-05-12:
+
+| Category | Item | Status |
+|----------|------|--------|
+| verification_gap | Phase 01.5 — VS Code marketplace search not executed (tools unavailable) | gaps_found |
+| todo | scientific-do集成everything-claude-code域识别路由 | pending |
+
+---
+
 *Last updated: 2026-05-12*
+
+## Current Position
+
+Phase: Milestone v1.0 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-05-12 — Milestone v1.0 completed and archived
+
+## Operator Next Steps
+
+- Start the next milestone with /gsd-new-milestone
