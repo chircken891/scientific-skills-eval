@@ -170,6 +170,45 @@ fi
 echo ""
 
 # -------------------------------------------------------
+# D-09: Gap Detection in scientific-do
+# -------------------------------------------------------
+echo "--- D-09: Gap Detection ---"
+if [ -f "$DOCTOR_SKILL" ]; then
+  if grep -q 'Gap Detection (D-09)' "$DOCTOR_SKILL"; then
+    echo -e "  D-09 PASS: Gap Detection section found in scientific-do $PASS"
+  else
+    echo -e "  D-09 FAIL: 'Gap Detection (D-09)' not found in scientific-do $FAIL"
+    ALL_PASS=false
+  fi
+
+  if grep -q 'skill-discovery.sh' "$DOCTOR_SKILL"; then
+    echo -e "  D-09 PASS: skill-discovery.sh reference found in scientific-do $PASS"
+  else
+    echo -e "  D-09 FAIL: skill-discovery.sh not referenced in scientific-do $FAIL"
+    ALL_PASS=false
+  fi
+else
+  echo -e "  D-09 FAIL: scientific-do/SKILL.md not found $FAIL"
+  ALL_PASS=false
+fi
+
+# Check feedback-state.json has gaps array
+if [ -f "$FEEDBACK_FILE" ]; then
+  if command -v jq &>/dev/null; then
+    if jq -e '.gaps | type == "array"' "$FEEDBACK_FILE" > /dev/null 2>&1; then
+      echo -e "  D-09 PASS: feedback-state.json has gaps array $PASS"
+    else
+      echo -e "  D-09 FAIL: feedback-state.json missing gaps array $FAIL"
+      ALL_PASS=false
+    fi
+  fi
+else
+  echo -e "  D-09 FAIL: feedback-state.json not found $FAIL"
+  ALL_PASS=false
+fi
+echo ""
+
+# -------------------------------------------------------
 # D-19: Extension activation marker in scientific-do routing
 # -------------------------------------------------------
 echo "--- D-19: Extension Skill Activation ---"
