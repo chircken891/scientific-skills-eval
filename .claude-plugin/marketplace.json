@@ -1,0 +1,38 @@
+{
+  "name": "scientific-skills",
+  "version": "1.0.0",
+  "publish_date": "2026-05-12",
+  "description": "Complete scientific research workflow bundle for Claude Code",
+  "categories": ["research", "academic", "medical"],
+  "repository": "local",
+  "skills": [
+    {
+      "name": "deepxiv_sdk",
+      "description": "Literature search and paper discovery"
+    },
+    {
+      "name": "academic-paper-analysis",
+      "description": "Academic paper analysis and critique"
+    },
+    {
+      "name": "scientific-agent-skills",
+      "description": "Scientific data analysis and research methodology"
+    },
+    {
+      "name": "academic-writing-skills",
+      "description": "Academic paper writing and formatting"
+    },
+    {
+      "name": "paper-plot-skills",
+      "description": "Scientific figure and chart generation"
+    },
+    {
+      "name": "Paper-Polish-Workflow-skill",
+      "description": "Paper polishing and submission preparation"
+    },
+    {
+      "name": "medsci-skills",
+      "description": "Medical and life sciences research skills"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "hooks": [
+    {
+      "name": "session-start",
+      "trigger": "session_start",
+      "script": "session-start"
+    }
+  ]
+}
