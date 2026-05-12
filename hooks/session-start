@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Scientific Skills - Session Start Hook
+# Injects scientific-do coordinator and skill guidance into session
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BUNDLE_DIR="$(dirname "$SCRIPT_DIR")"
+
+# Check if scientific-do SKILL.md exists (created in phase 05-03)
+if [ -f "$BUNDLE_DIR/skills/scientific-do/SKILL.md" ]; then
+    COORDINATOR_CONTENT=$(cat "$BUNDLE_DIR/skills/scientific-do/SKILL.md" 2>/dev/null || echo "")
+
+    # Output JSON for Claude Code to inject as additionalContext
+    echo "===SCIENTIFIC-SKILLS-INIT==="
+    echo "{\"type\": \"skill-bundle\", \"name\": \"scientific-skills\", \"coordinator\": \"scientific-do\"}"
+    echo "{\"type\": \"context-injection\", \"content\": \"When handling scientific research tasks, first check available skills at ~/.claude/scientific-skills/skills/ and invoke appropriate skill based on trigger conditions.\"}"
+    echo "===SCIENTIFIC-SKILLS-INIT==="
+fi
+
+# List available skills for reference
+echo "===AVAILABLE-SKILLS==="
+ls -la "$BUNDLE_DIR/skills/" 2>/dev/null | grep "SKILL.md" | awk '{print $NF}' | sed 's/\/SKILL.md//' || echo "No skills found"
+echo "===AVAILABLE-SKILLS==="
+
+exit 0
