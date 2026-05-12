@@ -50,12 +50,10 @@ bench_skill() {
   # Get file size
   file_size=$(wc -c < "$skill_dir/SKILL.md" 2>/dev/null || echo 0)
 
-  # Measure SKILL.md parse time (head + read to a variable)
+  # Measure SKILL.md parse time (head read to /dev/null, timing the read)
   start=$(date +%s%N)
   # Simulate loading and parsing SKILL.md frontmatter
-  head -20 "$skill_dir/SKILL.md" > /dev/null
-  local content
-  content=$(head -20 "$skill_dir/SKILL.md" 2>/dev/null)
+  head -20 "$skill_dir/SKILL.md" > /dev/null 2>&1
   load_end=$(date +%s%N)
   parse_time_ms=$(( (load_end - start) / 1000000 ))
 
@@ -100,7 +98,7 @@ for i in "${!SKILL_NAMES[@]}"; do
   echo "=== Benchmarking: $name ==="
   row=$(bench_skill "$name" "$query")
   # Extract only the TSV row (last line of output that starts with skill name)
-  tsv_line=$(echo "$row" | grep "^${name}\s")
+  tsv_line=$(echo "$row" | grep "^${name}[[:space:]]")
   if [ -n "$tsv_line" ]; then
     TSV_ROWS="${TSV_ROWS}${tsv_line}"$'\n'
   fi

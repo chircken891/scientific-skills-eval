@@ -35,7 +35,7 @@ while IFS='|' read -r skill_name repo; do
   echo -n "CHECK: $skill_name ($repo) ... "
 
   # Get last known SHA from state file
-  LAST_SHA=$(jq -r --arg s "$skill_name" '(.skill_states | .[$s]) .last_known_sha // ""' "$STATE_FILE")
+  LAST_SHA=$(jq -r --arg s "$skill_name" '(.skill_states // {})[$s].last_known_sha // ""' "$STATE_FILE")
 
   # Get remote SHA from GitHub API
   REMOTE_SHA=""
