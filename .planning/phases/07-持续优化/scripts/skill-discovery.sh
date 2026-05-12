@@ -41,7 +41,7 @@ ALL_RESULTS=""
 for term in "${SEARCH_TERMS[@]}"; do
   echo "Searching: $term"
   if command -v gh &>/dev/null; then
-    RESULTS=$(gh search repos "$term" --limit 10 --json name,owner,description,url 2>/dev/null || echo "[]")
+    RESULTS=$(gh search repos "$term" --limit 10 --json name,owner,description,url 2>/dev/null | jq -c '.[] | {name, full_name: ("\(.owner.login)/\(.name)"), description, html_url: .url}' 2>/dev/null || echo "[]")
   else
     # Fallback: use curl to GitHub API search
     ENCODED_TERM=$(echo "$term" | sed 's/+/%20/g')
@@ -56,7 +56,7 @@ done
 
 # Deduplicate and display results
 echo "=== Candidate Skills ==="
-echo "$ALL_RESULTS" | jq -s 'unique_by(.full_name) | .[] | "\(.full_name // .name) — \(.description // "no description")"' 2>/dev/null || echo "(no results or jq parse failed)"
+echo "$ALL_RESULTS" | jq -s 'flatten | unique_by(.full_name) | .[] | "\(.full_name // .name) — \(.description // "no description")"' 2>/dev/null || echo "(no results or jq parse failed)"
 echo ""
 
 echo "=== Exclusion Check (D-11) ==="
