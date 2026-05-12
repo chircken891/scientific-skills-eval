@@ -2,6 +2,8 @@
 
 This bundle provides a complete scientific research workflow for Claude Code, covering literature review through publication.
 
+**Version:** 2.0.0 — Phase 7 Enhanced
+
 ## Core Skills (7 Academic Skills)
 
 ### 1. deepxiv_sdk - Literature Search
@@ -73,6 +75,11 @@ Research Phase → Analysis Phase → Writing Phase → Submission Phase
 - MUST confirm approach with user before executing major research steps
 - Trigger: Key implementation decisions
 
+**HARD-GATE 5: Verify after Completion**
+- MUST verify research output against the original request
+- MUST confirm each stage gate passes before proceeding
+- Trigger: End of each research orchestration cycle
+
 ---
 
 ## Capability Boundaries
@@ -122,6 +129,13 @@ User: "Create a bar chart showing the results"
 → Invokes: paper-plot-skills
 ```
 
+### 4. Structured Registration (Phase 7)
+Each skill now declares trigger keywords, scenarios, and model preferences in its SKILL.md frontmatter:
+- `triggers.keywords`: Exact match keywords
+- `triggers.scenarios`: Context scenarios for fuzzy matching
+- `triggers.exclude_when`: Conditions to skip this skill
+- `model`: Preferred model for this skill
+
 ---
 
 ## Extension Skills (On-demand)
@@ -145,8 +159,9 @@ This bundle integrates with the Get Shit Done (GSD) methodology:
 - **execution phase**: scientific-agent-skills (analysis) + paper-plot-skills
 - **writing phase**: academic-writing-skills + medsci-skills
 - **submission phase**: Paper-Polish-Workflow-skill
+- **optimization phase**: scientific-do (coordinator) + feedback-state.json
 
 ---
 
-*Last updated: 2026-05-12*
-*Bundle version: 1.0.0*
+*Last updated: 2026-05-12 — Phase 7 Enhancement*
+*Bundle version: 2.0.0*
