@@ -139,10 +139,10 @@ echo ""
 # -------------------------------------------------------
 echo "--- D-04: Proactive Intent Detection ---"
 if [ -f "$DOCTOR_SKILL" ]; then
-  if grep -q '### 1. Intent Parsing' "$DOCTOR_SKILL"; then
-    echo -e "  D-04 PASS: '### 1. Intent Parsing' found $PASS"
+  if grep -q '### 1. Proactive Intent Parsing' "$DOCTOR_SKILL"; then
+    echo -e "  D-04 PASS: '### 1. Proactive Intent Parsing' found $PASS"
   else
-    echo -e "  D-04 FAIL: '### 1. Intent Parsing' not found in scientific-do $FAIL"
+    echo -e "  D-04 FAIL: '### 1. Proactive Intent Parsing' not found in scientific-do $FAIL"
     ALL_PASS=false
   fi
 else
@@ -173,10 +173,10 @@ echo ""
 # -------------------------------------------------------
 echo "--- D-19: Extension Skill Activation ---"
 if [ -f "$DOCTOR_SKILL" ]; then
-  if grep -q '### 2. Skill Routing.*Extension\|### 2.*Extension' "$DOCTOR_SKILL"; then
-    echo -e "  D-19 PASS: Extension activation marker found in scientific-do $PASS"
+  if grep -q 'Extension pool check' "$DOCTOR_SKILL"; then
+    echo -e "  D-19 PASS: Extension pool check found in scientific-do $PASS"
   else
-    echo -e "  D-19 FAIL: Extension activation marker not found in scientific-do $FAIL"
+    echo -e "  D-19 FAIL: Extension pool check not found in scientific-do $FAIL"
     ALL_PASS=false
   fi
 else
