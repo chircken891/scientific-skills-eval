@@ -294,7 +294,7 @@ fi
 # -------------------------------------------------------
 echo ""
 echo "--- D-18: Smoke Test Procedure ---"
-if grep -q "完成后必须验证" "$SCIDO_FILE" 2>/dev/null || grep -q "smoke" ".planning/phases/07-持续优化/scripts/update-check.sh" 2>/dev/null; then
+if grep -q "完成后必须验证" "$SCIDO_FILE" 2>/dev/null || grep -q "smoke" "$PHASE_DIR/scripts/update-check.sh" 2>/dev/null; then
   echo -e "  D-18 PASS: Post-update verification documented $PASS"
 else
   echo -e "  D-18 FAIL: Post-update verification not found $FAIL"
