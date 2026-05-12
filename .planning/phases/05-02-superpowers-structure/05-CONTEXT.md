@@ -44,6 +44,12 @@ Phase 5：实际集成到Claude Code环境，包含5个子计划：
 - **D-14:** 用户切换方式：scientific-do智能推荐
 - **D-15:** 冲突处理：由scientific-do协调器决策
 
+### Phase 5-03 scientific-do协调器
+- **D-16:** 核心功能：意图解析 + skill路由 + 依赖链编排 + 冲突处理
+- **D-17:** 触发优先级逻辑：智能调优（精确匹配 + 模糊fallback + 智能调优）
+- **D-18:** 冲突处理：综合决策（上下文 + 用户偏好 + 历史使用习惯）
+- **D-19:** 状态管理：全局状态（所有skill可读写）
+
 </decisions>
 
 <canonical_refs>
@@ -72,10 +78,11 @@ Phase 5：实际集成到Claude Code环境，包含5个子计划：
 | Plan | 内容 | 状态 |
 |------|------|------|
 | 05-01 | 检测已安装，未安装则安装（10个） | 待讨论 |
-| 05-02 | 创建集合包（scientific-skills + scientific-do） | 已讨论 |
-| 05-03 | 功能测试指南（7个skill） | 已讨论 |
-| 05-04 | 工作流测试（端到端） | 已讨论 |
-| 05-05 | 验证报告+SUMMARY | 已讨论 |
+| 05-02 | 创建集合包（scientific-skills，不含scientific-do） | 已讨论 |
+| 05-03 | 制作scientific-do协调器 | 待讨论 |
+| 05-04 | 功能测试指南（7个skill） | 已讨论 |
+| 05-05 | 工作流测试（端到端） | 已讨论 |
+| 05-06 | 验证报告+SUMMARY | 已讨论 |
 
 ### 核心方案（7个skill）
 deepxiv_sdk, scientific-agent-skills, academic-writing-skills, paper-plot-skills, Paper-Polish-Workflow-skill, medsci-skills, everything-claude-code
