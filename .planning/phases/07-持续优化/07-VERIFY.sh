@@ -18,6 +18,7 @@ PHASE_DIR="$SCRIPT_DIR"
 SKILLS_BASE="$HOME/.claude/scientific-skills/skills"
 DOCTOR_SKILL="$SKILLS_BASE/scientific-do/SKILL.md"
 FEEDBACK_FILE="$HOME/.claude/scientific-skills/feedback-state.json"
+SCIDO_FILE="$HOME/.claude/scientific-skills/skills/scientific-do/SKILL.md"
 
 SKILL_DIRS=(
   "$SKILLS_BASE/deepxiv_sdk"
@@ -222,6 +223,44 @@ else
   ALL_PASS=false
 fi
 echo ""
+
+# -------------------------------------------------------
+# D-16 check: update-check.sh (Plan 04 version)
+# -------------------------------------------------------
+echo ""
+echo "--- D-16: Update Check Script ---"
+UPDATE_SCRIPT_NEW="$PHASE_DIR/scripts/update-check.sh"
+if [ -x "$UPDATE_SCRIPT_NEW" ]; then
+  echo -e "  D-16 PASS: update-check.sh exists and executable $PASS"
+else
+  echo -e "  D-16 FAIL: update-check.sh missing or not executable $FAIL"
+  ALL_PASS=false
+fi
+
+# -------------------------------------------------------
+# D-10/D-11 check: skill-discovery.sh (Plan 04 version)
+# -------------------------------------------------------
+echo ""
+echo "--- D-10/D-11: Skill Discovery ---"
+DISCOVERY_SCRIPT_NEW="$PHASE_DIR/scripts/skill-discovery.sh"
+if [ -x "$DISCOVERY_SCRIPT_NEW" ]; then
+  echo -e "  D-10/D-11 PASS: skill-discovery.sh exists and executable $PASS"
+else
+  echo -e "  D-10/D-11 FAIL: skill-discovery.sh missing or not executable $FAIL"
+  ALL_PASS=false
+fi
+
+# -------------------------------------------------------
+# D-18 check: Smoke test procedure documented
+# -------------------------------------------------------
+echo ""
+echo "--- D-18: Smoke Test Procedure ---"
+if grep -q "完成后必须验证" "$SCIDO_FILE" 2>/dev/null || grep -q "smoke" ".planning/phases/07-持续优化/scripts/update-check.sh" 2>/dev/null; then
+  echo -e "  D-18 PASS: Post-update verification documented $PASS"
+else
+  echo -e "  D-18 FAIL: Post-update verification not found $FAIL"
+  ALL_PASS=false
+fi
 
 # -------------------------------------------------------
 # Summary
