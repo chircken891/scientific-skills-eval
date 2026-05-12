@@ -96,6 +96,36 @@ When multiple skills compete:
 - User preference: User's settings in config
 - Historical usage: Usage frequency statistics
 
+### 5. Post-Action Verification Closure (D-05)
+
+After each scientific-do orchestration cycle, run a lightweight verification:
+
+**Verification Gates:**
+- [ ] GATE 1: Is the literature reviewed before planning/analysis? (HARD)
+- [ ] GATE 2: Is the methodology designed before writing? (HARD)
+- [ ] GATE 3: Are figures derived from completed analysis? (SOFT — warn but proceed)
+- [ ] GATE 4: Is the output consistent with the requested research stage? (SOFT)
+
+**Gate Responses:**
+- HARD gate failure → HALT execution, report to user, request correction
+- SOFT gate failure → Log warning, continue execution, flag for user review
+
+**Usage Tracking (D-14, D-15):**
+
+After verification, increment the feedback counter:
+- Read `~/.claude/scientific-skills/feedback-state.json` counter
+- Only count substantive orchestrations (>= 2 skill calls OR >= 30s execution time)
+- Increment by 1 for matching orchestrations
+- Write updated counter back to file
+
+**Counter trigger (every 10):**
+If counter >= 10 after increment:
+1. Reset counter to 0
+2. Prompt user: "Research Workflow Feedback: Please rate the last 10 research orchestrations (1-5):"
+3. Collect optional text comment
+4. Run update check for all installed skills (see update-check.sh)
+5. Save rating + comment + timestamp to feedback-state.json ratings array
+
 ## Integration
 
 **Requires skills:**
@@ -111,3 +141,4 @@ When multiple skills compete:
 - 规划前必须研究 (Research before planning)
 - 写作前必须设计 (Design before writing)
 - 执行前必须确认 (Confirm before execution)
+- 完成后必须验证 (Verify after completion)
