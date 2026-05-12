@@ -1,0 +1,30 @@
+{
+  "config_version": 1,
+  "model_map": {
+    "default": "claude-sonnet-4-20250514",
+    "deepxiv_sdk": "claude-sonnet-4-20250514",
+    "academic-paper-analysis": "claude-sonnet-4-20250514",
+    "scientific-agent-skills": "claude-sonnet-4-20250514",
+    "academic-writing-skills": "claude-sonnet-4-20250514",
+    "paper-plot-skills": "claude-sonnet-4-20250514",
+    "Paper-Polish-Workflow-skill": "claude-sonnet-4-20250514",
+    "medsci-skills": "claude-sonnet-4-20250514"
+  },
+  "skill_registry": {
+    "deepxiv_sdk": { "role": "literature_search", "tier": "core", "repo": "DeepXiv/deepxiv_sdk" },
+    "academic-paper-analysis": { "role": "paper_analysis", "tier": "core", "repo": null },
+    "scientific-agent-skills": { "role": "data_analysis", "tier": "core", "repo": "K-Dense-AI/scientific-agent-skills" },
+    "academic-writing-skills": { "role": "paper_writing", "tier": "core", "repo": "bahayonghang/academic-writing-skills" },
+    "paper-plot-skills": { "role": "figure_generation", "tier": "core", "repo": "Boom5426/paper-plot-skills" },
+    "Paper-Polish-Workflow-skill": { "role": "submission_polish", "tier": "core", "repo": "Lylll9436/Paper-Polish-Workflow-skill" },
+    "medsci-skills": { "role": "medical_research", "tier": "core", "repo": "MedgeClaw/medsci-skills" },
+    "nature-skills": { "role": "nature_submission", "tier": "extension", "repo": "Yuan1z0825/nature-skills" },
+    "claude-scholar": { "role": "citation_management", "tier": "extension", "repo": "yy/claude-scholar" },
+    "scientify": { "role": "openclaw_integration", "tier": "extension", "repo": "tsingyuai/scientify" }
+  },
+  "thresholds": {
+    "core_auto_activate": 4.0,
+    "extension_download": 3.0,
+    "exclude_below": 3.0
+  }
+}
