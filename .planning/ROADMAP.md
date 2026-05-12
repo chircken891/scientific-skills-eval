@@ -124,7 +124,7 @@ Plans:
 
 | 任务 | 状态 |
 |------|------|
-| 检测已安装，未安装则安装 | 待开始 |
+| 安装核心Skill（6学术+everything-claude-code外部） | 待开始 |
 | 创建集合包（scientific-skills） | 待开始 |
 | 制作scientific-do协调器 | 待开始 |
 | 功能测试指南 | 待开始 |

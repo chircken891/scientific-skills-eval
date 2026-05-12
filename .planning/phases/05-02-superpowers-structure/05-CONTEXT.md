@@ -7,17 +7,23 @@
 <domain>
 ## Phase Boundary
 
-Phase 5：实际集成到Claude Code环境，包含5个子计划：
-- 05-01：安装核心Skill（10个）
+Phase 5：实际集成到Claude Code环境，包含6个子计划：
+- 05-01：安装核心Skill
 - 05-02：创建集合包（scientific-skills）
-- 05-03：功能测试指南（7个skill完整测试套件）
-- 05-04：工作流测试（端到端）
-- 05-05：验证报告+SUMMARY
+- 05-03：制作scientific-do协调器
+- 05-04：功能测试指南
+- 05-05：工作流测试（端到端）
+- 05-06：验证报告+SUMMARY
 
 </domain>
 
 <decisions>
 ## Implementation Decisions
+
+### Phase 5-01 安装核心Skill
+- **D-20:** 6个学术skill安装到集合（deepxiv_sdk, scientific-agent-skills, academic-writing-skills, paper-plot-skills, Paper-Polish-Workflow-skill, medsci-skills）
+- **D-21:** everything-claude-code独立于集合，外部引用（地位等同于gsd、superpowers）
+- **D-22:** 3个扩展skill预下载不激活（nature-skills, claude-scholar, scientify）
 
 ### Phase 5-02 集合包结构（已讨论）
 - **D-01:** superpowers标准插件风格
@@ -77,17 +83,20 @@ Phase 5：实际集成到Claude Code环境，包含5个子计划：
 ### 子计划清单
 | Plan | 内容 | 状态 |
 |------|------|------|
-| 05-01 | 检测已安装，未安装则安装（10个） | 待讨论 |
+| 05-01 | 检测已安装，未安装则安装（6学术+everything-claude-code） | 已讨论 |
 | 05-02 | 创建集合包（scientific-skills，不含scientific-do） | 已讨论 |
-| 05-03 | 制作scientific-do协调器 | 待讨论 |
-| 05-04 | 功能测试指南（7个skill） | 已讨论 |
+| 05-03 | 制作scientific-do协调器 | 已讨论 |
+| 05-04 | 功能测试指南（6个学术skill） | 已讨论 |
 | 05-05 | 工作流测试（端到端） | 已讨论 |
 | 05-06 | 验证报告+SUMMARY | 已讨论 |
 
-### 核心方案（7个skill）
-deepxiv_sdk, scientific-agent-skills, academic-writing-skills, paper-plot-skills, Paper-Polish-Workflow-skill, medsci-skills, everything-claude-code
+### 学术skill（6个，安装到集合）
+deepxiv_sdk, scientific-agent-skills, academic-writing-skills, paper-plot-skills, Paper-Polish-Workflow-skill, medsci-skills
 
-### 替换方案（预下载不激活）
+### 外部引用skill（独立安装）
+everything-claude-code（等同于gsd、superpowers）
+
+### 扩展skill（预下载不激活）
 | 角色 | 核心方案 | 替换方案 |
 |------|---------|---------|
 | 图表生成 | paper-plot-skills | nature-skills |
