@@ -33,6 +33,28 @@
 
 ---
 
+## 扩展方案Skill（可选安装）
+
+### 扩展方案1/5: Nature期刊专项
+
+| Skill | GitHub | 全局安装命令 |
+|-------|--------|---------------|
+| nature-skills | Yuan1z0825/nature-skills | `git clone` ✅ 已安装 |
+
+### 扩展方案2: 引用管理增强
+
+| Skill | GitHub | 全局安装命令 |
+|-------|--------|---------------|
+| claude-scholar | yy/claude-scholar | `git clone` ✅ 已安装 |
+
+### 扩展方案3: OpenClaw生态
+
+| Skill | GitHub | 全局安装命令 |
+|-------|--------|---------------|
+| scientify | tsingyuai/scientify | `git clone` ✅ 已安装 |
+
+---
+
 ## 安装验证记录表
 
 **请在安装过程中更新此表：**
