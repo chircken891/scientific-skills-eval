@@ -118,10 +118,10 @@ echo ""
 echo "--- D-07: Benchmark Script ---"
 BENCH_SCRIPT="$PHASE_DIR/scripts/benchmark.sh"
 if [ -f "$BENCH_SCRIPT" ] && [ -x "$BENCH_SCRIPT" ]; then
-  grep -q 'bench_skill\|Benchmarking\|Parse time\|Route time' "$BENCH_SCRIPT" 2>/dev/null && \
-    echo -e "  D-07 PASS: benchmark.sh exists and contains timing functions $PASS" || \
+  if grep -q 'bench_skill\|Benchmarking\|Parse time\|Route time' "$BENCH_SCRIPT" 2>/dev/null; then
+    echo -e "  D-07 PASS: benchmark.sh exists and contains timing functions $PASS"
+  else
     echo -e "  D-07 FAIL: benchmark.sh missing expected content $FAIL"
-  if ! grep -q 'bench_skill\|Benchmarking\|Parse time\|Route time' "$BENCH_SCRIPT" 2>/dev/null; then
     ALL_PASS=false
   fi
 else
@@ -237,10 +237,10 @@ echo ""
 echo "--- D-16: Update Check Script ---"
 UPDATE_SCRIPT="$PHASE_DIR/scripts/update-check.sh"
 if [ -f "$UPDATE_SCRIPT" ]; then
-  grep -q 'LOCAL_SHA\|REMOTE_SHA\|git rev-parse\|update' "$UPDATE_SCRIPT" 2>/dev/null && \
-    echo -e "  D-16 PASS: update-check.sh exists with update logic $PASS" || \
+  if grep -q 'LOCAL_SHA\|REMOTE_SHA\|git rev-parse\|update' "$UPDATE_SCRIPT" 2>/dev/null; then
+    echo -e "  D-16 PASS: update-check.sh exists with update logic $PASS"
+  else
     echo -e "  D-16 FAIL: update-check.sh missing expected content $FAIL"
-  if ! grep -q 'LOCAL_SHA\|REMOTE_SHA\|git rev-parse\|update' "$UPDATE_SCRIPT" 2>/dev/null; then
     ALL_PASS=false
   fi
 else
@@ -255,10 +255,10 @@ echo ""
 echo "--- D-10/D-11: Skill Discovery Script ---"
 DISCOVERY_SCRIPT="$PHASE_DIR/scripts/skill-discovery.sh"
 if [ -f "$DISCOVERY_SCRIPT" ]; then
-  grep -q 'GITHUB\|skill-discovery\|DepthScore\|discovery' "$DISCOVERY_SCRIPT" 2>/dev/null && \
-    echo -e "  D-10/D-11 PASS: skill-discovery.sh exists with discovery logic $PASS" || \
+  if grep -q 'GITHUB\|skill-discovery\|DepthScore\|discovery' "$DISCOVERY_SCRIPT" 2>/dev/null; then
+    echo -e "  D-10/D-11 PASS: skill-discovery.sh exists with discovery logic $PASS"
+  else
     echo -e "  D-10/D-11 FAIL: skill-discovery.sh missing expected content $FAIL"
-  if ! grep -q 'GITHUB\|skill-discovery\|DepthScore\|discovery' "$DISCOVERY_SCRIPT" 2>/dev/null; then
     ALL_PASS=false
   fi
 else
