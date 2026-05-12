@@ -201,6 +201,13 @@ if [ -f "$FEEDBACK_FILE" ]; then
       echo -e "  D-09 FAIL: feedback-state.json missing gaps array $FAIL"
       ALL_PASS=false
     fi
+  else
+    if grep -q '"gaps"' "$FEEDBACK_FILE" 2>/dev/null; then
+      echo -e "  D-09 PASS: feedback-state.json has gaps field $PASS"
+    else
+      echo -e "  D-09 FAIL: feedback-state.json missing gaps field $FAIL"
+      ALL_PASS=false
+    fi
   fi
 else
   echo -e "  D-09 FAIL: feedback-state.json not found $FAIL"
