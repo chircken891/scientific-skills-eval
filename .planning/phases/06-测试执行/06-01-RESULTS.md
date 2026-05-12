@@ -35,19 +35,27 @@
 **Test Input:** Search for "machine learning in healthcare" literature
 
 **Test Date:** 2026-05-12
+**Re-evaluated:** 2026-05-12
 
 **Results:**
-- Literature list returned: YES
-- DOI/URL present: PARTIAL (web search results with links, not DOI format)
-- Result quality: Acceptable
+- Literature list returned: NO (无学术数据库后端)
+- DOI/URL present: NO (无数据库连接)
+- 学术搜索能力: NO (SKILL.md声称支持arXiv/PubMed但无实现)
 
-**Status:** PASS
+**Status:** FAIL (重新评估后降级)
+
+**Root Cause Analysis:**
+| 检查项 | 预期 | 实际 |
+|--------|------|------|
+| 目录内容 | 代码+配置 | 仅SKILL.md (1093 bytes) |
+| Python模块 | deepxiv_sdk可导入 | `python -m deepxiv_sdk` 不存在 |
+| MCP backend | arXiv/PubMed MCP server | settings.json中无学术MCP配置 |
+| 搜索能力 | 学术数据库 | 无后端支撑 |
 
 **Test Notes:**
-- DeepXiv SDK module not installed (`python -m deepxiv_sdk` failed)
-- Alternative: Web search via MiniMax MCP returned relevant literature results
-- Skill triggered correctly via Skill tool invocation
-- Literature sources found include IEEE, academic sites, review articles
+- SKILL.md 仅定义了流程框架，无实现代码
+- 首次测试记录为PASS是因为降级使用了通用web_search替代——这不属于学术文献检索
+- 需要接入arXiv API或PubMed API才能实现skill声明的功能
 
 ---
 
@@ -197,7 +205,7 @@
 
 | Skill | Status | Notes |
 |-------|--------|-------|
-| deepxiv_sdk | PASS | Literature search works (web search fallback available) |
+| deepxiv_sdk | FAIL | No backend: SKILL.md only, no arXiv/PubMed API, no MCP server |
 | academic-paper-analysis | PASS | Full analysis framework functional |
 | scientific-agent-skills | PASS | 135 skills across 20+ domains available |
 | academic-writing-skills | PASS | Multi-format (LaTeX/Typst/Word) supported |
@@ -205,9 +213,9 @@
 | Paper-Polish-Workflow-skill | PASS | 16 polishing skills, de-AI-ification works |
 | medsci-skills | PASS | PRISMA/STROBE/CONSORT guidelines available |
 
-**Tier 1 Pass Rate:** 7/7 (100%)
-**Critical Issues Found:** 0 (minor: deepxiv_sdk module not installed, but web search fallback works)
-**Action Required:** None — all skills functional
+**Tier 1 Pass Rate:** 6/7 (85.7%)
+**Critical Issues Found:** 1 (deepxiv_sdk: 无学术搜索后端)
+**Action Required:** 接入 arXiv API 或 PubMed API 为 deepxiv_sdk 提供搜索后端
 
 ---
 *Phase 6 Tier 1 Results - Last Updated: 2026-05-12*

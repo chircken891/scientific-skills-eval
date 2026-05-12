@@ -1,14 +1,18 @@
 # Phase 6 问题清单
 
 **Generated:** 2026-05-12
-**Last Updated:** 2026-05-12
+**Last Updated:** 2026-05-12 (re-evaluated)
 **分类标准:** Per D-02
 
 ---
 
 ## Critical问题 (立即修复)
 
-无Critical问题。
+| ID | 描述 | 影响 | Tier | 修复方案 | 状态 |
+|----|------|------|------|----------|------|
+| P6-C01 | deepxiv_sdk 无学术搜索后端 | 文献搜索功能完全不可用。SKILL.md声明支持arXiv/PubMed但无API接入，无MCP server，仅一个1093字节的文档 | Tier 1 | 方案A: 配置arXiv MCP server (推荐)；方案B: Python后端调用arXiv/PubMed API | open |
+
+**Critical问题数:** 1
 
 ---
 
@@ -16,11 +20,10 @@
 
 | ID | 描述 | 优先级 | Tier | 状态 | 说明 |
 |----|------|--------|------|------|------|
-| P6-E01 | deepxiv_sdk Python模块未安装 | low | Tier 1 | resolved | 非问题。deepxiv_sdk仅有SKILL.md，通过MiniMax MCP web_search实现文献搜索，Tier 1 PASS确认功能正常 |
-| P6-E02 | 性能基准测试未执行 | low | N/A | wontfix | 非Phase 6范围。Phase 7可选补充 |
-| P6-E03 | 自动化测试框架未建立 | low | N/A | wontfix | 非Phase 6范围。Phase 7可选补充 |
+| P6-E01 | 性能基准测试未执行 | low | N/A | wontfix | 非Phase 6范围。Phase 7可选补充 |
+| P6-E02 | 自动化测试框架未建立 | low | N/A | wontfix | 非Phase 6范围。Phase 7可选补充 |
 
-**Edge问题数:** 3 (均无需修复，0个待处理)
+**Edge问题数:** 2
 
 ---
 
@@ -28,29 +31,35 @@
 
 | Tier | Critical数 | Edge数 | 通过率 | 待修复 |
 |------|-----------|--------|--------|--------|
-| Tier 1 | 0 | 1 (已确认非问题) | 100% | 0 |
+| Tier 1 | 1 | 0 | 85.7% | 1 |
 | Tier 2 | 0 | 0 | 100% | 0 |
 | Tier 3 | 0 | 0 | 100% | 0 |
 
+整体趋势：1个Critical问题(P6-C01)，需在Phase 7前修复。
+
 ---
 
-## 修复结论
+## 修复建议
 
-**需要修复的问题: 0**
+### 立即修复 (Phase 6.1)
+1. **P6-C01**: 为deepxiv_sdk添加学术搜索后端
+   - 方案A: 配置arXiv MCP server (推荐，快速)
+   - 方案B: 添加Python后端调用arXiv/PubMed API
 
-- P6-E01 经二次确认，deepxiv_sdk skill设计上不依赖Python模块，通过MCP工具完成功能，Tier 1测试已通过
-- P6-E02/P6-E03 属于Phase 7可选优化项，非Phase 6范围
+### 后续优化 (Phase 7)
+1. **P6-E01**: 建立性能基准测试套件
+2. **P6-E02**: 建立自动化测试框架以支持持续集成
 
 ---
 
 ## Phase 6 测试总结
 
-**总体通过率:** 100% (16/16测试通过)
-**Critical问题:** 0
-**待修复问题:** 0
-**Edge问题:** 3 (2项非本阶段范围，1项已确认为设计预期)
+**总体通过率:** 93.8% (15/16测试通过)
+**Critical问题:** 1 (P6-C01: deepxiv_sdk 无后端)
+**待修复问题:** 1
+**Edge问题:** 2 (非本阶段范围)
 
-Phase 6 测试执行成功完成。无阻塞问题。进入Phase 7持续优化。
+Phase 6 测试执行完成。1个Critical问题需在Phase 7前修复：deepxiv_sdk需接入arXiv/PubMed API。
 
 ---
 
