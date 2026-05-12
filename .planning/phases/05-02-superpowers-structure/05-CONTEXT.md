@@ -21,7 +21,7 @@ Phase 5：实际集成到Claude Code环境，包含6个子计划：
 ## Implementation Decisions
 
 ### Phase 5-01 安装核心Skill
-- **D-20:** 6个学术skill安装到集合（deepxiv_sdk, scientific-agent-skills, academic-writing-skills, paper-plot-skills, Paper-Polish-Workflow-skill, medsci-skills）
+- **D-20:** 7个学术skill安装到集合（deepxiv_sdk, academic-paper-analysis, scientific-agent-skills, academic-writing-skills, paper-plot-skills, Paper-Polish-Workflow-skill, medsci-skills）
 - **D-21:** everything-claude-code独立于集合，外部引用（地位等同于gsd、superpowers）
 - **D-22:** 3个扩展skill预下载不激活（nature-skills, claude-scholar, scientify）
 
@@ -90,8 +90,8 @@ Phase 5：实际集成到Claude Code环境，包含6个子计划：
 | 05-05 | 工作流测试（端到端） | 已讨论 |
 | 05-06 | 验证报告+SUMMARY | 已讨论 |
 
-### 学术skill（6个，安装到集合）
-deepxiv_sdk, scientific-agent-skills, academic-writing-skills, paper-plot-skills, Paper-Polish-Workflow-skill, medsci-skills
+### 学术skill（7个，安装到集合）
+deepxiv_sdk, academic-paper-analysis, scientific-agent-skills, academic-writing-skills, paper-plot-skills, Paper-Polish-Workflow-skill, medsci-skills
 
 ### 外部引用skill（独立安装）
 everything-claude-code（等同于gsd、superpowers）
