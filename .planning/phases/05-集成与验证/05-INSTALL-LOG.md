@@ -39,13 +39,13 @@
 
 | Skill | 安装状态 | 安装时间 | 验证结果 | 备注 |
 |-------|----------|----------|----------|------|
-| deepxiv_sdk | ☐ 待安装 | - | ☐ 未验证 | |
-| scientific-agent-skills | ☐ 待安装 | - | ☐ 未验证 | |
-| academic-writing-skills | ☐ 待安装 | - | ☐ 未验证 | |
-| paper-plot-skills | ☐ 待安装 | - | ☐ 未验证 | |
-| Paper-Polish-Workflow-skill | ☐ 待安装 | - | ☐ 未验证 | |
-| medsci-skills | ☐ 待安装 | - | ☐ 未验证 | |
-| everything-claude-code | ☐ 待安装 | - | ☐ 未验证 | |
+| deepxiv_sdk | ✅ 已安装 | 2026-05-12 | ☐ 未验证 | |
+| scientific-agent-skills | ✅ 已安装 | 2026-05-12 | ☐ 未验证 | |
+| academic-writing-skills | ✅ 已安装 | 2026-05-12 | ☐ 未验证 | |
+| paper-plot-skills | ✅ 已安装 | 2026-05-12 | ☐ 未验证 | |
+| Paper-Polish-Workflow-skill | ✅ 已安装 | 2026-05-12 | ☐ 未验证 | |
+| medsci-skills | ✅ 已安装 | 2026-05-12 | ☐ 未验证 | |
+| everything-claude-code | ✅ 已安装 | 2026-05-12 | ☐ 未验证 | |
 
 ---
 
