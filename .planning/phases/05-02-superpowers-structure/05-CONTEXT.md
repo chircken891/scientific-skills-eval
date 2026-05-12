@@ -39,6 +39,11 @@ Phase 5：实际集成到Claude Code环境，包含5个子计划：
 - **D-11:** 报告格式：Markdown报告
 - **D-12:** 报告内容：执行摘要 + 测试结果汇总 + 问题与解决 + 验收确认
 
+### 替换方案处理
+- **D-13:** 核心方案装好，替换方案预下载不激活
+- **D-14:** 用户切换方式：scientific-do智能推荐
+- **D-15:** 冲突处理：由scientific-do协调器决策
+
 </decisions>
 
 <canonical_refs>
@@ -66,14 +71,22 @@ Phase 5：实际集成到Claude Code环境，包含5个子计划：
 ### 子计划清单
 | Plan | 内容 | 状态 |
 |------|------|------|
-| 05-01 | 安装核心Skill（10个） | 待开始 |
-| 05-02 | 创建集合包（scientific-skills） | 已讨论 |
+| 05-01 | 检测已安装，未安装则安装（10个） | 待讨论 |
+| 05-02 | 创建集合包（scientific-skills + scientific-do） | 已讨论 |
 | 05-03 | 功能测试指南（7个skill） | 已讨论 |
 | 05-04 | 工作流测试（端到端） | 已讨论 |
 | 05-05 | 验证报告+SUMMARY | 已讨论 |
 
-### 7个核心Skill
+### 核心方案（7个skill）
 deepxiv_sdk, scientific-agent-skills, academic-writing-skills, paper-plot-skills, Paper-Polish-Workflow-skill, medsci-skills, everything-claude-code
+
+### 替换方案（预下载不激活）
+| 角色 | 核心方案 | 替换方案 |
+|------|---------|---------|
+| 图表生成 | paper-plot-skills | nature-skills |
+| 投稿润色 | Paper-Polish-Workflow-skill | nature-skills |
+| 引用管理 | — | claude-scholar |
+| OpenClaw用户 | — | scientify |
 
 ### 测试要求
 - 完整测试套件：冒烟测试 + 边界情况 + 异常处理
