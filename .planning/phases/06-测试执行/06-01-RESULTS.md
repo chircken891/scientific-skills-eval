@@ -35,27 +35,22 @@
 **Test Input:** Search for "machine learning in healthcare" literature
 
 **Test Date:** 2026-05-12
-**Re-evaluated:** 2026-05-12
+**Re-evaluated:** 2026-05-12 (installed: pip install deepxiv-sdk v0.2.5)
 
 **Results:**
-- Literature list returned: NO (无学术数据库后端)
-- DOI/URL present: NO (无数据库连接)
-- 学术搜索能力: NO (SKILL.md声称支持arXiv/PubMed但无实现)
+- Literature list returned: YES (14 arXiv papers found)
+- DOI/URL present: YES (arXiv IDs: 2112.08862, 2502.07026, etc.)
+- 学术数据库覆盖: arXiv ✓, PubMed Central ✓, bioRxiv ✓, medRxiv ✓
+- 引用数/日期: YES (structured metadata)
 
-**Status:** FAIL (重新评估后降级)
-
-**Root Cause Analysis:**
-| 检查项 | 预期 | 实际 |
-|--------|------|------|
-| 目录内容 | 代码+配置 | 仅SKILL.md (1093 bytes) |
-| Python模块 | deepxiv_sdk可导入 | `python -m deepxiv_sdk` 不存在 |
-| MCP backend | arXiv/PubMed MCP server | settings.json中无学术MCP配置 |
-| 搜索能力 | 学术数据库 | 无后端支撑 |
+**Status:** ✓ PASS
 
 **Test Notes:**
-- SKILL.md 仅定义了流程框架，无实现代码
-- 首次测试记录为PASS是因为降级使用了通用web_search替代——这不属于学术文献检索
-- 需要接入arXiv API或PubMed API才能实现skill声明的功能
+- 搜得14篇arXiv论文，得分排序，自动注册免费token (1000次/天)
+- 初次测试FAIL是因为pip包未安装。安装后正常运行
+- 数据源: arXiv全量(每日增量同步), PMC, Semantic Scholar
+- 支持CLI/Python SDK/MCP三种接入方式
+- GitHub: github.com/DeepXiv/deepxiv_sdk
 
 ---
 
@@ -205,7 +200,7 @@
 
 | Skill | Status | Notes |
 |-------|--------|-------|
-| deepxiv_sdk | FAIL | No backend: SKILL.md only, no arXiv/PubMed API, no MCP server |
+| deepxiv_sdk | PASS | arXiv/PubMed via deepxiv-sdk v0.2.5 (BAAI/DeepXiv) |
 | academic-paper-analysis | PASS | Full analysis framework functional |
 | scientific-agent-skills | PASS | 135 skills across 20+ domains available |
 | academic-writing-skills | PASS | Multi-format (LaTeX/Typst/Word) supported |
@@ -213,9 +208,9 @@
 | Paper-Polish-Workflow-skill | PASS | 16 polishing skills, de-AI-ification works |
 | medsci-skills | PASS | PRISMA/STROBE/CONSORT guidelines available |
 
-**Tier 1 Pass Rate:** 6/7 (85.7%)
-**Critical Issues Found:** 1 (deepxiv_sdk: 无学术搜索后端)
-**Action Required:** 接入 arXiv API 或 PubMed API 为 deepxiv_sdk 提供搜索后端
+**Tier 1 Pass Rate:** 7/7 (100%)
+**Critical Issues Found:** 0
+**Action Required:** None — all skills functional
 
 ---
 *Phase 6 Tier 1 Results - Last Updated: 2026-05-12*

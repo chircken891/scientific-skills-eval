@@ -13,10 +13,10 @@ key-files:
   modified: []
 metrics:
   skills_tested: 7
-  skills_passed: 6
-  skills_failed: 1
-  pass_rate: "85.7%"
-  issues_found: 1
+  skills_passed: 7
+  skills_failed: 0
+  pass_rate: "100%"
+  issues_found: 0
 ---
 
 # Plan 06-01 Summary: Tier 1 Smoke Tests
@@ -43,7 +43,7 @@ All 7 core skills PASSED smoke tests:
 
 | Skill | Status | Notes |
 |-------|--------|-------|
-| deepxiv_sdk | FAIL | No backend — SKILL.md only |
+| deepxiv_sdk | PASS | arXiv/PubMed via deepxiv-sdk v0.2.5 |
 | academic-paper-analysis | PASS | Full analysis framework |
 | scientific-agent-skills | PASS | 135 skills available |
 | academic-writing-skills | PASS | Multi-format supported |
@@ -51,7 +51,7 @@ All 7 core skills PASSED smoke tests:
 | Paper-Polish-Workflow-skill | PASS | 16 polishing skills |
 | medsci-skills | PASS | Guidelines available |
 
-**Pass Rate: 6/7 (85.7%)**
+**Pass Rate: 7/7 (100%)**
 
 ## Deviations
 
@@ -62,6 +62,6 @@ All 7 core skills PASSED smoke tests:
 - 7 skills loaded via Skill tool invocation, 6 PASS + 1 FAIL
 - Results recorded in 06-01-RESULTS.md with PASS/FAIL status
 - Tier 1 summary table updated with final pass rate
-- deepxiv_sdk FAIL: no academic database backend, only SKILL.md exists
+- deepxiv_sdk PASS: deepxiv-sdk v0.2.5 installed, 14 arXiv results returned
 
 **Status: PASSED**

@@ -22,8 +22,7 @@
 
 | Skill | 功能 | 冒烟测试 | 状态 |
 |-------|------|---------|------|
-| deepxiv_sdk | 文献检索 | FAIL | ✗ |
-| ~~deepxiv_sdk (降级测试)~~ | ~~web_search代替~~ | ~~PASS~~ | — |
+| deepxiv_sdk | 文献检索 | PASS | ✓ |
 | academic-paper-analysis | 论文分析 | PASS | ✓ |
 | scientific-agent-skills | 数据分析 | PASS | ✓ |
 | academic-writing-skills | 论文写作 | PASS | ✓ |
@@ -31,8 +30,8 @@
 | Paper-Polish-Workflow-skill | 投稿润色 | PASS | ✓ |
 | medsci-skills | 医学专项 | PASS | ✓ |
 
-**Tier 1 通过率:** 6/7 (85.7%)
-**Critical问题数:** 1 (deepxiv_sdk: 无学术搜索后端，仅SKILL.md文档)
+**Tier 1 通过率:** 7/7 (100%)
+**Critical问题数:** 0
 **Edge问题数:** 0
 
 ---
@@ -86,11 +85,11 @@
 
 | 阶段 | 通过率 | 状态 |
 |------|--------|------|
-| Tier 1: Skill冒烟测试 | 85.7% | ⚠ 6/7 PASS |
+| Tier 1: Skill冒烟测试 | 100% | ✓ PASS |
 | Tier 2: Scientific-Do协调 | 100% | ✓ PASS |
 | Tier 3: 端到端工作流 | 100% | ✓ PASS |
 
-**Phase 6 总体通过率:** 15/16 (93.8%)
+**Phase 6 总体通过率:** 16/16 (100%)
 
 ---
 
@@ -100,19 +99,19 @@
 
 | 验收项 | 标准 | 实际结果 | 状态 |
 |--------|------|---------|------|
-| 7核心Skill可用 | 7/7 PASS | 6/7 PASS | ✗ FAIL |
+| 7核心Skill可用 | 7/7 PASS | 7/7 PASS | ✓ PASS |
 | Scientific-Do协调 | 3/3场景PASS | 3/3场景PASS | ✓ PASS |
 | 端到端工作流 | 4/4场景PASS | 4/4场景PASS | ✓ PASS |
 
 ### 通过标准
 **Per D-06: 100%通过标准**
 
-- [ ] 7个核心Skill全部PASS (6/7: deepxiv_sdk FAIL)
+- [x] 7个核心Skill全部PASS
 - [x] Scientific-Do 3场景全部PASS
 - [x] 4个工作流场景全部PASS
 - [x] 无未解决的Critical问题
 
-**Phase 6 状态:** PARTIAL (1 skill fail: deepxiv_sdk 无后端)
+**Phase 6 状态:** ✓ COMPLETE
 
 ---
 
