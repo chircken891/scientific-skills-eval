@@ -128,7 +128,6 @@ else
   if [ -f "$BENCH_SCRIPT" ]; then
     echo -e "  D-07 FAIL: benchmark.sh exists but is NOT executable $FAIL"
   else
-    grep -q 'nofile' "$BENCH_SCRIPT" 2>/dev/null  # Intentional grep that fails on nonexistent file
     echo -e "  D-07 FAIL: benchmark.sh not found at $BENCH_SCRIPT $FAIL"
   fi
   ALL_PASS=false
@@ -245,7 +244,6 @@ if [ -f "$UPDATE_SCRIPT" ]; then
     ALL_PASS=false
   fi
 else
-  grep -q 'nofile' "$UPDATE_SCRIPT" 2>/dev/null
   echo -e "  D-16 FAIL: update-check.sh not found at $UPDATE_SCRIPT $FAIL"
   ALL_PASS=false
 fi
@@ -264,7 +262,6 @@ if [ -f "$DISCOVERY_SCRIPT" ]; then
     ALL_PASS=false
   fi
 else
-  grep -q 'nofile' "$DISCOVERY_SCRIPT" 2>/dev/null
   echo -e "  D-10/D-11 FAIL: skill-discovery.sh not found at $DISCOVERY_SCRIPT $FAIL"
   ALL_PASS=false
 fi
