@@ -83,6 +83,28 @@ Route to the best matching skill using structured trigger fields from all regist
 
 5. **Exclude check**: If the task matches a skill's `exclude_when` conditions, skip it even on keyword match
 
+**Gap Detection (D-09):**
+
+If all routing stages (1-4) fail to match any skill with score >= 1:
+1. Log the gap: Record the user's request, context, and attempted matches
+2. Notify user: "Current skill bundle has no skill that matches this task."
+3. Offer discovery: "Would you like to search GitHub for candidate skills?"
+   - If user confirms: Run `bash .planning/phases/07-持续优化/scripts/skill-discovery.sh`
+   - Discovery script results provide candidate repos for Phase 2 evaluation
+4. Record gap in feedback-state.json under a `gaps` array:
+   ```json
+   {
+     "gaps": [
+       {
+         "timestamp": "...",
+         "request": "user request summary",
+         "stage": "research/analysis/writing/polishing",
+         "attempted_skills": ["skill1", "skill2"]
+       }
+     ]
+   }
+   ```
+
 ### 3. Dependency Chain Orchestration
 
 Determine execution order:
