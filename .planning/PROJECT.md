@@ -27,26 +27,27 @@
 - ✓ 生成最优组合方案（7核心 + 3扩展） — v1.0
 - ✓ 完成集成（scientific-do 协调器 + 8 SKILL.md 注册） — v1.0
 - ✓ 持续优化基础设施（验证脚本、更新检测、反馈收集、性能基准） — v1.0
+- ✓ **GSD-01**: GSD 项目上下文感知 — scientific-do 检测 `.planning/` 并读取 phase/plan 状态 — v1.1
 - ✓ **GSD-02**: 调用日志系统 — invocation_log 结构化记录每次执行（9字段, mkdir锁, 200截断+归档, 触发器）— v1.1
 - ✓ **GSD-03**: GSD 合规输出 — 执行结果写入 phase 目录的 SD-SUMMARY.md / SD-SUPPLEMENT.md — v1.1
+- ✓ everything-claude-code 域识别路由 — scientific-do detectDomain() 关键词白名单, 非科学请求自动引导 — v1.1
 
 ### Active
 
-- [ ] **GSD-01**: GSD 项目上下文感知 — scientific-do 检测 `.planning/` 并读取 phase/plan 状态
-- [ ] everything-claude-code 域识别路由集成（deferred — see STATE.md）
+(None — all v1.1 requirements shipped)
 
 ### Out of Scope
 
 - 不做 skill/plugin 开发（除非现有方案都不满足）
 - 不评价学术论文内容本身
-- everything-claude-code 完全集成（v1.0 仅限科研域）
 - 论文润色实战（留给后续 milestone）
+- GSD-04/GSD-05 长任务会话管理和自动 plan 建议（留给后续 milestone）
 
 ## Context
 
-- **Shipped:** v1.0 — 10 phases, 26 plans
-- **Tech stack:** Claude Code skills (YAML + Markdown), Bash scripts, JSON configs
-- **Delivered:** scientific-skills bundle (7 core + 3 extension), scientific-do coordinator, verification/benchmark/update/discovery infrastructure
+- **Shipped:** v1.0 (10 phases, 26 plans) + v1.1 (3 phases, 5 plans, 11 tasks)
+- **Tech stack:** Claude Code skills (YAML + Markdown), TypeScript (intent parsing/routing), Bash scripts (context detection, invocation log), Node.js (JSON I/O)
+- **Delivered:** scientific-skills bundle (7 core + 3 extension), scientific-do coordinator with domain routing, GSD context detection, invocation_log pipeline with concurrent-safe writes
 
 ## Constraints
 
@@ -114,6 +115,19 @@
 | P7 D-19: 扩展按需激活 | Phase 5 预下载的 3 个扩展 skill 按需自动激活 | ✓ Good — v1.0 |
 | P7 D-20: 不预设优先级 | scientific-do 按场景匹配选择最合适 skill | ✓ Good — v1.0 |
 
+### GSD 集成协议 (v1.1 Phase 08-09.1)
+
+| Decision | Rationale | Outcome |
+|----------|-----------|---------|
+| D-04: GSD 上下文检测 | gsd-context-detect.sh 解析 STATE.md/ROADMAP.md/PROJECT.md，输出结构化 JSON 供路由使用；非 GSD 目录优雅降级 | ✓ Good — v1.1 |
+| D-05: 轻量检测优先 | --quick flag 先做存在性检查，只在低置信度时做全量解析，减少开销 | ✓ Good — v1.1 |
+| D-07: 置信度增强 | GSD phase context 匹配 skill 角色时 +0.2 confidence boost | ✓ Good — v1.1 |
+| D-01: invocation_log entry 9字段 schema | timestamp, intent, routed_skill, status (4值), error_summary, execution_summary, phase, plan, duration_ms | ✓ Good — v1.1 |
+| D-02: counter = invocation_log.length | 每次调用均计数，移除旧 substantive-only 过滤 | ✓ Good — v1.1 |
+| D-03: 触发器 %10/%20 | 每 10 次弹评分，每 20 次检查更新 | ✓ Good — v1.1 |
+| D-06: current_plan 字段 | gsd-context-detect.sh 输出新增 top-level current_plan，6 种边缘值归一化为 null | ✓ Good — v1.1 |
+| D-21: everything-claude-code 域路由 | scientific-do detectDomain() 关键词白名单，非科学请求导向 ECC，不合并两套路由表 | ✓ Good — v1.1 |
+
 ---
 
-*Last updated: 2026-05-13 — v1.1 Phase 9 complete (invocation_log system + GSD compliance output delivered)*
+*Last updated: 2026-05-13 — v1.1 milestone shipped (GSD integration protocol complete)*

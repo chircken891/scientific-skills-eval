@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 科研Skill评测与集成** — Phases 0-7 (shipped 2026-05-12)
-- **v1.1 GSD-scientific集成协议** — Phases 8-9 (planning)
+- ✅ **v1.1 GSD-scientific集成协议** — Phases 8-9.1 (shipped 2026-05-13)
 
 ## Phases
 
@@ -24,11 +24,12 @@
 
 </details>
 
-<details open>
-<summary>🔜 v1.1 GSD-scientific集成协议 (Phases 8-9) — PLANNING</summary>
+<details>
+<summary>✅ v1.1 GSD-scientific集成协议 (Phases 8-9.1) — SHIPPED 2026-05-13</summary>
 
-- [ ] **Phase 8: GSD 项目上下文感知** — scientific-do 检测 `.planning/` 并读取 phase/plan 状态
-- [ ] **Phase 9: 调用追踪与 GSD 合规产出** — invocation_log 结构化记录 + 产出写入 phase 目录
+- [x] Phase 8: GSD 项目上下文感知 (2/2 plans) — completed 2026-05-13
+- [x] Phase 9: 调用追踪与 GSD 合规产出 (2/2 plans) — completed 2026-05-13
+- [x] Phase 09.1: everything-claude-code 域识别路由 (1/1 plan) — completed 2026-05-13
 
 </details>
 
@@ -36,49 +37,21 @@
 
 ### Phase 8: GSD 项目上下文感知
 
-**Goal**: scientific-do 启动时自动检测 GSD 项目上下文，识别当前 phase/plan/requirement 状态，使后续路由和执行逻辑能感知项目阶段。
-
-**Depends on**: Nothing (first phase of v1.1, builds on existing scientific-do infrastructure)
-
-**Requirements**: GSD-01
-
-**Success Criteria** (what must be TRUE):
-1. scientific-do 启动时检测当前目录是否存在 `.planning/`，存在则自动读取 PROJECT.md / STATE.md / ROADMAP.md
-2. scientific-do 能解析 STATE.md 中的 `current_position`（phase/plan/status）和 progress 字段
-3. scientific-do 能解析 ROADMAP.md 中的 phase 列表和完成状态
-4. 当不在 GSD 项目目录内（无 `.planning/`）时，scientific-do 正常降级运行，不报错
-5. 上下文数据在路由决策中可用（后续 phase 可通过 env/context 访问）
-
-**Plans**: 2 plans
-
-```
-Plans:
-- [x] 08-01-PLAN.md — gsd-context-detect.sh 核心实现（检测+解析+测试框架）
-- [x] 08-02-PLAN.md — scientific-do Step 1 集成（GSD 信号、置信度增强、环境变量）
-```
+❌ Superseded — see `.planning/milestones/v1.1-ROADMAP.md` for full details.
 
 ### Phase 9: 调用追踪与 GSD 合规产出
 
-**Goal**: 每次 scientific-do 执行生成结构化调用记录，并将产出写入 GSD phase 目录，实现执行追踪与项目可审计性。
+❌ Superseded — see `.planning/milestones/v1.1-ROADMAP.md` for full details.
 
-**Depends on**: Phase 8
+### Phase 09.1: everything-claude-code 域识别路由
 
-**Requirements**: GSD-02, GSD-03
+**Goal**: scientific-do 识别非科学请求并引导到 everything-claude-code
 
-**Success Criteria** (what must be TRUE):
-1. 每次 scientific-do 调用在 feedback-state.json 的 invocation_log 数组新增一条记录，包含 timestamp、intent、routed_skill、execution_summary、phase/plan 关联、duration_ms
-2. 在 GSD 项目内执行时，产出文件写入对应 phase 目录（`.planning/phases/phase-{N}/`），遵循 phase 命名约定
-3. 生成的输出文件格式为 SUMMARY.md（phase 级总结）或 SUPPLEMENT.md（plan 级补充），包含 frontmatter 元数据
-4. 非 GSD 项目环境下，调用日志仍正常记录（不包含 phase/plan 字段），产出写入默认位置
-5. invocation_log 累计增长时可被用于后续分析（如执行频次统计、常用 skill 排行）
-
-**Plans**: 2 plans
-
+**Plans**: 1 plan
 
 ```
 Plans:
-- [x] 09-01-PLAN.md - gsd-context-detect.sh current_plan field (D-06 follow-up)
-- [x] 09-02-PLAN.md - append-invocation-log.sh helper + tests + SKILL.md Step 5
+- [x] 09.1-PLAN.md — intent-parser.ts detectDomain() + skill-router.ts FALLBACK_GUIDE + SKILL.md 能力边界
 ```
 
 ## Progress
@@ -96,9 +69,11 @@ Plans:
 | 05. 集成与验证 | v1.0 | 6/6 | Complete | 2026-05-12 |
 | 06. 测试执行 | v1.0 | 4/4 | Complete | 2026-05-12 |
 | 07. 持续优化 | v1.0 | 5/5 | Complete | 2026-05-12 |
-| **8. GSD 上下文感知** | **v1.1** | **0/2** | **Planning** | **—** |
-| **9. 调用追踪与合规产出** | **v1.1** | **0/0** | **Defined** | **—** |
+| **8. GSD 上下文感知** | **v1.1** | **2/2** | **Complete** | **2026-05-13** |
+| **9. 调用追踪与合规产出** | **v1.1** | **2/2** | **Complete** | **2026-05-13** |
+| **09.1. ECC 域识别路由** | **v1.1** | **1/1** | **Complete** | **2026-05-13** |
 
 ---
 
 See `.planning/milestones/v1.0-ROADMAP.md` for v1.0 full phase details.
+See `.planning/milestones/v1.1-ROADMAP.md` for v1.1 full phase details.
