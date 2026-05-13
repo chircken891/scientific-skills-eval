@@ -59,6 +59,24 @@ Analyze user input and active context to infer research intent proactively:
 - On parse error: set `GSD_CONTEXT_ERROR` env var with error description, continue execution (D-04)
 - GSD context is a hint, not a hard rule — user may need cross-phase skills at any time (D-07)
 
+**Phase-to-Role Confidence Boost (D-07):**
+- Role mapping from `scientific-skills-config.json` `skill_registry`:
+  | GSD Phase Domain | skill_registry.role | Affected Skills |
+  |-----------------|---------------------|-----------------|
+  | literature_search | literature_search | deepxiv_sdk |
+  | paper_analysis | paper_analysis | academic-paper-analysis |
+  | data_analysis | data_analysis | scientific-agent-skills |
+  | paper_writing | paper_writing | academic-writing-skills |
+  | figure_generation | figure_generation | paper-plot-skills |
+  | submission_polish | submission_polish | Paper-Polish-Workflow-skill |
+  | medical_research | medical_research | medsci-skills |
+- When GSD context has a `current_phase` value that maps to a domain above:
+  - Read the current phase's description/name from the GSD output
+  - Match against the domain column (e.g., Phase focused on "literature" → literature_search)
+  - Add +0.2 to the confidence score of all skills with that role
+- The boost increases the skill's rank in the matching priority but does NOT force routing
+- Clarification threshold remains at 0.6 (unchanged by GSD context)
+
 **Context Signals:**
 - File context: What files are open? (.R, .py, .md, .tex)
 - Working directory: Is the user in a research project directory?
