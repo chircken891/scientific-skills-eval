@@ -55,13 +55,44 @@
 
 ## Key Decisions
 
+### 评测体系 (v1.0 Phase 01.5-02)
+
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| 安全一票否决 | 科研数据敏感，不可妥协 | ✓ Good — v1.0 |
-| 两阶段评估架构 | 专业深度驱动决策 | ✓ Good — v1.0 |
-| D-xx 决策体系 | 21个可验证决策项 | ✓ Good — v1.0 |
-| GSD 做外层调度 | 不重复造轮子，scientific-do 做执行引擎 | — Pending |
+| 安全一票否决 | 4 项硬检查（数据安全/权限/网络/依赖），任一不合格直接排除 | ✓ Good — v1.0 |
+| 两阶段评估架构 | Tier 1 专业深度评分(1-5) 驱动决策，Tier 2 描述性信息辅助组合 | ✓ Good — v1.0 |
+| 专业深度取代全能评分 | Phase 01.5.1 重构：只评 skill 最擅长的 1-2 个功能质量，不全能不扣分 | ✓ Good — v1.0 |
+| 阈值自动化 | <3.0 EXCLUDE / 3.0-4.0 CANDIDATE / >4.0 AUTO-RECOMMEND | ✓ Good — v1.0 |
+| 跨平台搜索 | 不限于 GitHub，覆盖 npm、VS Code marketplace、MCP registry | ✓ Good — v1.0 |
+
+### 组合与架构 (v1.0 Phase 03-05)
+
+| Decision | Rationale | Outcome |
+|----------|-----------|---------|
+| 1+N 组合模式 | 1 核心方案(7 skill) + N 扩展方案(角色替换)，灵活性与稳定性的平衡 | ✓ Good — v1.0 |
+| scientific-do 中央协调器 | 5-step：意图解析 → 路由 → 编排 → 验证 → 反馈 | ✓ Good — v1.0 |
+| GSD 做外层调度 | scientific-do 是执行引擎，不替代 GSD 调度器 | ✓ Good — v1.0 |
+| HARD-GATE 策略 | 规划前必须研究、写作前必须设计、执行前必须确认 | ✓ Good — v1.0 |
+| 结构化 Skill 注册 | 每个 skill 声明触发关键词 + 典型场景 + 排除场景 + 模型偏好 | ✓ Good — v1.0 |
+
+### 反馈闭环 (v1.0 Phase 07)
+
+| Decision | Rationale | Outcome |
+|----------|-----------|---------|
+| P7 D-09: 自动检测缺口 | scientific-do 执行时自动检测能力缺口 | ✓ Good — v1.0 |
+| P7 D-10: GitHub 搜索候选 skill | 发现缺口后自动搜索 | ✓ Good — v1.0 |
+| P7 D-11: 沿用 Phase 2 筛选标准 | 安全否决 + DepthScore 阈值 | ✓ Good — v1.0 |
+| P7 D-12: 分级入库 | >4.0 核心 / 3.0-4.0 扩展 / <3.0 不入库 | ✓ Good — v1.0 |
+| P7 D-13: 替换逻辑 | 新角色→新增 / 同角色更强→替换 / 同角色差不多→扩展池 | ✓ Good — v1.0 |
+| P7 D-14: 静默自动记录 | 每次 skill 调用记录成功/失败状态和耗时 → Phase 9 落地为 invocation_log | ✓ Good — v1.0 |
+| P7 D-15: 评分触发 | 每 10 次 scientific-do 调用弹出 1-5 分评分 | — Pending (Phase 9) |
+| P7 D-16: 更新检查与反馈绑定 | 每 20 次（已从 10 改为 20）检查已安装 skill 上游更新 | — Pending (Phase 9) |
+| P7 D-17: 人工确认更新 | 发现更新→通知摘要+人工确认，不自动更新 | — Pending |
+| P7 D-18: 更新后冒烟测试 | 更新后全量冒烟测试 7 个核心 skill | — Pending |
+| P7 D-19: 扩展 skill 按需激活 | Phase 5 预下载的 3 个扩展 skill 按需自动激活 | ✓ Good — v1.0 |
+| P7 D-20: 不预设优先级 | scientific-do 按场景匹配选择最合适 skill | ✓ Good — v1.0 |
+| P7 D-01: 保持中央协调器架构 | 不改为分布式 agent | ✓ Good — v1.0 |
 
 ---
 
-*Last updated: 2026-05-12 after v1.0 milestone*
+*Last updated: 2026-05-13 — v1.0 retrospective completed (Key Decisions fully populated, RETROSPECTIVE.md created, MILESTONES.md repaired)*
