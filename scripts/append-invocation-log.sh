@@ -98,11 +98,12 @@ write_gsd_output() {
   # Resolve phase directory under GSD_PROJECT_ROOT/.planning/phases/
   local phase_dir=""
   # Try original phase value first, then zero-padded (2-digit)
-  phase_dir=$(ls -d "$GSD_PROJECT_ROOT/.planning/phases/${phase}-"* 2>/dev/null | head -1)
+  # Use find with -name instead of glob to prevent glob character injection
+  phase_dir=$(find "$GSD_PROJECT_ROOT/.planning/phases" -maxdepth 1 -type d -name "${phase}-*" 2>/dev/null | head -1)
   if [ -z "$phase_dir" ]; then
     local padded
     padded=$(printf "%02d" "$(echo "$phase" | sed 's/^0*//' 2>/dev/null || echo "0")" 2>/dev/null || echo "$phase")
-    phase_dir=$(ls -d "$GSD_PROJECT_ROOT/.planning/phases/${padded}-"* 2>/dev/null | head -1)
+    phase_dir=$(find "$GSD_PROJECT_ROOT/.planning/phases" -maxdepth 1 -type d -name "${padded}-*" 2>/dev/null | head -1)
   fi
 
   # Fallback: use phase value as-is
