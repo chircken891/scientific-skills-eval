@@ -21,6 +21,6 @@
 
 | REQ-ID | Description | Phase |
 |--------|-------------|-------|
-| GSD-01 | GSD context detection | — |
-| GSD-02 | invocation log | — |
-| GSD-03 | GSD output format | — |
+| GSD-01 | GSD context detection | Phase 8 |
+| GSD-02 | invocation log | Phase 9 |
+| GSD-03 | GSD output format | Phase 9 |
