@@ -1,1 +1,0 @@
-Repo	Domain	数据安全	权限范围	网络请求	依赖来源	SecurityVerdict	Function1_Name	Function1_Score(1-5)	Function2_Name	Function2_Score(1-5)	DepthScore(1-5)	Threshold	ExclusionReason	Integration_集成难度(1-5)	Integration_MCP兼容(1-5)	Integration_冲突风险(1-5)	Integration_维护成本(1-5)	Integration_上下文依赖(1-5)	Integration_小计	Coverage_Stages	Coverage_Description

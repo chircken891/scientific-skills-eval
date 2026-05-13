@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: Awaiting next milestone
-last_updated: "2026-05-12T11:15:45.759Z"
-last_activity: 2026-05-12 — Milestone v1.0 completed and archived
+milestone: v1.1
+milestone_name: GSD-scientific集成协议
+status: planning
+last_updated: "2026-05-13T00:29:40.559Z"
+last_activity: 2026-05-13
 progress:
-  total_phases: 11
-  completed_phases: 7
-  total_plans: 30
-  completed_plans: 26
-  percent: 87
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # 项目状态
@@ -117,10 +117,10 @@ Items acknowledged and deferred at milestone close on 2026-05-12:
 
 ## Current Position
 
-Phase: Milestone v1.0 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-05-12 — Milestone v1.0 completed and archived
+Status: Defining requirements
+Last activity: 2026-05-13 — Milestone v1.1 started
 
 ## Operator Next Steps
 
