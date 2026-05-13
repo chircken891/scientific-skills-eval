@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 # test-gsd-context-detect.sh — Test harness for gsd-context-detect.sh
+#
+# Cross-platform: uses process.argv and process.stdin streaming for node -e
+# (does not depend on /dev/stdin which is unavailable on Windows)
+#
 # Usage: bash test-gsd-context-detect.sh [--smoke|--all|--test-*]
 set -euo pipefail
 
@@ -10,6 +14,9 @@ FIXTURE_WITHOUT_GSD="$SCRIPT_DIR/fixtures/without-gsd"
 
 TESTS_PASSED=0
 TESTS_FAILED=0
+
+# Cross-platform: reads piped stdin from node via process.stdin streaming
+PIPE_NODE='let d="";process.stdin.setEncoding("utf8");process.stdin.on("data",c=>d+=c);process.stdin.on("end",()=>{'
 
 assert_eq() {
   local name="$1" actual="$2" expected="$3"
@@ -33,16 +40,22 @@ assert_contains() {
   fi
 }
 
+# Evaluates a field path expression on a JSON string (passed as argument)
+# Usage: json_field <json_string> <node_code_using_obj>
+# Returns: script stdout (or "PARSE_ERROR" on failure)
+json_field() {
+  local json_string="$1" code="$2"
+  node -e "
+const obj = JSON.parse(process.argv[1]);
+$code
+" "$json_string" 2>/dev/null || echo "PARSE_ERROR"
+}
+
 assert_json_field() {
   local name="$1" json_string="$2" field_path="$3" expected_value="$4"
   local actual
-  actual=$(echo "$json_string" | node -e "
-    const stdin = require('fs').readFileSync('/dev/stdin','utf8');
-    const obj = JSON.parse(stdin);
-    const val = $field_path;
-    console.log(val === null ? 'null' : String(val));
-  " 2>/dev/null || echo "PARSE_ERROR")
-  if [ "$actual" = "$expected" ]; then
+  actual=$(json_field "$json_string" "console.log($field_path)")
+  if [ "$actual" = "$expected_value" ]; then
     echo "  PASS: $name ($field_path == $expected_value)"
     TESTS_PASSED=$((TESTS_PASSED + 1))
   else
@@ -67,23 +80,24 @@ test_smoke() {
   echo "=== Smoke Tests ==="
   echo ""
 
-  # Test 1: Script produces valid JSON
+  # Test 1: Script produces valid JSON with gsd_project boolean
   local output
   output=$(bash "$GSD_SCRIPT" "$FIXTURE_WITH_GSD" 2>/dev/null || echo "INVALID_JSON")
-  echo "$output" | node -e "JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));" 2>/dev/null
-  assert_eq "Script produces valid JSON" "$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(typeof d.gsd_project);" 2>/dev/null)" "boolean"
+  local detected
+  detected=$(json_field "$output" "console.log(typeof obj.gsd_project)")
+  assert_eq "Script produces valid JSON with gsd_project field" "$detected" "boolean"
 
   # Test 2: Script detects with-gsd fixture
-  local detected
-  detected=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(d.gsd_project);" 2>/dev/null)
-  assert_eq "Detects with-gsd fixture" "$detected" "true"
+  local gsd_val
+  gsd_val=$(json_field "$output" "console.log(obj.gsd_project)")
+  assert_eq "Detects with-gsd fixture" "$gsd_val" "true"
 
   # Test 3: Script gracefully degrades on without-gsd fixture
   local output2
   output2=$(bash "$GSD_SCRIPT" "$FIXTURE_WITHOUT_GSD" 2>/dev/null || echo "INVALID_JSON")
-  local detected2
-  detected2=$(echo "$output2" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(d.gsd_project);" 2>/dev/null)
-  assert_eq "Graceful degradation without GSD" "$detected2" "false"
+  local gsd_val2
+  gsd_val2=$(json_field "$output2" "console.log(obj.gsd_project)")
+  assert_eq "Graceful degradation without GSD" "$gsd_val2" "false"
 }
 
 test_state_parsing() {
@@ -99,9 +113,9 @@ test_state_parsing() {
   assert_json_field "Total phases is 1" "$output" "obj.state.progress.total_phases" "1"
   assert_json_field "Completed phases is 0" "$output" "obj.state.progress.completed_phases" "0"
 
-  local has_position_phase
-  has_position_phase=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(typeof d.current_position === 'object' ? 'true' : 'false');" 2>/dev/null)
-  assert_eq "Current position is an object" "$has_position_phase" "true"
+  local has_position
+  has_position=$(json_field "$output" "console.log(typeof obj.current_position === 'object')")
+  assert_eq "Current position is an object" "$has_position" "true"
 }
 
 test_roadmap_parsing() {
@@ -113,7 +127,7 @@ test_roadmap_parsing() {
   output=$(bash "$GSD_SCRIPT" "$FIXTURE_WITH_GSD" 2>/dev/null)
 
   local phase_count
-  phase_count=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(Array.isArray(d.phases) ? d.phases.length : 0);" 2>/dev/null)
+  phase_count=$(json_field "$output" "console.log(Array.isArray(obj.phases) ? String(obj.phases.length) : '0')")
   if [ "$phase_count" -gt 0 ] 2>/dev/null; then
     echo "  PASS: phases is a non-empty array ($phase_count phases)"
     TESTS_PASSED=$((TESTS_PASSED + 1))
@@ -122,9 +136,9 @@ test_roadmap_parsing() {
     TESTS_FAILED=$((TESTS_FAILED + 1))
   fi
 
-  local has_phase_8
-  has_phase_8=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));const p8=d.phases.find(p=>p.number==='8');console.log(p8?p8.name:'NOT_FOUND');" 2>/dev/null)
-  assert_contains "Phase 8 found in phases array" "$has_phase_8" "GSD"
+  local phase_8_name
+  phase_8_name=$(json_field "$output" "const p8=obj.phases.find(p=>p.number==='8');console.log(p8?p8.name:'NOT_FOUND')")
+  assert_contains "Phase 8 found in phases array" "$phase_8_name" "GSD"
 }
 
 test_no_gsd() {
@@ -146,17 +160,12 @@ test_json_output() {
   local output
   output=$(bash "$GSD_SCRIPT" "$FIXTURE_WITH_GSD" 2>/dev/null)
 
-  local required_keys="gsd_project gsd_project_root state current_position phases project_core project_constraints claude_md"
+  local required_keys="gsd_project gsd_project_root state current_position phases project_core project_constraints claude_md planning_dir"
   for key in $required_keys; do
     local has_key
-    has_key=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(d.hasOwnProperty('$key')?'yes':'no');" 2>/dev/null)
+    has_key=$(json_field "$output" "console.log(obj.hasOwnProperty('$key') ? 'yes' : 'no')")
     assert_eq "Root key '$key' exists" "$has_key" "yes"
   done
-
-  # Verify planning_dir is also present (added in the output schema)
-  local has_planning_dir
-  has_planning_dir=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(d.hasOwnProperty('planning_dir')?'yes':'no');" 2>/dev/null)
-  assert_eq "Root key 'planning_dir' exists" "$has_planning_dir" "yes"
 }
 
 test_env_vars() {
@@ -167,9 +176,9 @@ test_env_vars() {
   local output
   output=$(bash "$GSD_SCRIPT" "$FIXTURE_WITH_GSD" 2>/dev/null)
 
-  # Verify GSD_PROJECT_ROOT would be extractable
+  # GSD_PROJECT_ROOT
   local project_root
-  project_root=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(typeof d.gsd_project_root === 'string' && d.gsd_project_root.length > 0 ? d.gsd_project_root : '');" 2>/dev/null)
+  project_root=$(json_field "$output" "console.log(typeof obj.gsd_project_root === 'string' && obj.gsd_project_root.length > 0 ? obj.gsd_project_root : '')")
   if [ -n "$project_root" ]; then
     echo "  PASS: GSD_PROJECT_ROOT is extractable ($project_root)"
     TESTS_PASSED=$((TESTS_PASSED + 1))
@@ -178,10 +187,10 @@ test_env_vars() {
     TESTS_FAILED=$((TESTS_FAILED + 1))
   fi
 
-  # Verify GSD_CURRENT_PHASE would be extractable from current_position
+  # GSD_CURRENT_PHASE from current_position
   local current_phase
-  current_phase=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));const cp=d.current_position||{};console.log(cp.phase||'NOT_FOUND');" 2>/dev/null)
-  if [ -n "$current_phase" ]; then
+  current_phase=$(json_field "$output" "const cp=obj.current_position||{};console.log(cp.phase||'NOT_FOUND')")
+  if [ -n "$current_phase" ] && [ "$current_phase" != "NOT_FOUND" ]; then
     echo "  PASS: GSD_CURRENT_PHASE is extractable ($current_phase)"
     TESTS_PASSED=$((TESTS_PASSED + 1))
   else
@@ -189,10 +198,10 @@ test_env_vars() {
     TESTS_FAILED=$((TESTS_FAILED + 1))
   fi
 
-  # Verify GSD_MILESTONE would be extractable
+  # GSD_MILESTONE
   local milestone
-  milestone=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(d.state&&d.state.milestone?d.state.milestone:'NOT_FOUND');" 2>/dev/null)
-  if [ -n "$milestone" ]; then
+  milestone=$(json_field "$output" "console.log(obj.state&&obj.state.milestone?obj.state.milestone:'NOT_FOUND')")
+  if [ -n "$milestone" ] && [ "$milestone" != "NOT_FOUND" ]; then
     echo "  PASS: GSD_MILESTONE is extractable ($milestone)"
     TESTS_PASSED=$((TESTS_PASSED + 1))
   else
@@ -206,18 +215,18 @@ test_quick_flag() {
   echo "=== Quick Flag Tests ==="
   echo ""
 
-  # Test --quick flag skips file parsing
   local output
   output=$(bash "$GSD_SCRIPT" --quick "$FIXTURE_WITH_GSD" 2>/dev/null)
+
   assert_json_field "quick: gsd_project is true" "$output" "obj.gsd_project" "true"
 
-  local project_root
-  project_root=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(typeof d.gsd_project_root === 'string' && d.gsd_project_root.length > 0 ? 'yes' : 'no');" 2>/dev/null)
-  assert_eq "quick: gsd_project_root is non-empty string" "$project_root" "yes"
+  local has_root
+  has_root=$(json_field "$output" "console.log(typeof obj.gsd_project_root === 'string' && obj.gsd_project_root.length > 0 ? 'yes' : 'no')")
+  assert_eq "quick: gsd_project_root is non-empty string" "$has_root" "yes"
 
-  # With --quick, state should be minimal/empty — check that state is not a fully populated object
+  # With --quick, state should be absent/unset
   local state_milestone
-  state_milestone=$(echo "$output" | node -e "const d=JSON.parse(require('fs').readFileSync('/dev/stdin','utf8'));console.log(d.state&&d.state.milestone?d.state.milestone:'NO_STATE');" 2>/dev/null)
+  state_milestone=$(json_field "$output" "console.log(obj.state&&obj.state.milestone?obj.state.milestone:'NO_STATE')")
   assert_eq "quick: state is not fully parsed (milestone missing)" "$state_milestone" "NO_STATE"
 }
 
