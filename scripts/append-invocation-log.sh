@@ -214,7 +214,7 @@ if (state.invocation_log.length > $MAX_LOG) {
   state.invocation_log = state.invocation_log.slice(-$MAX_LOG);
   try {
     var archive = [];
-    try { archive = JSON.parse(fs.readFileSync(process.argv[10], 'utf8')); } catch(e) {}
+    try { archive = JSON.parse(fs.readFileSync(process.argv[10], 'utf8')); } catch(e) { console.error('[WARN] Failed to read archive: ' + e.message); }
     if (!Array.isArray(archive)) archive = [];
     archive.push.apply(archive, removed);
     fs.writeFileSync(process.argv[10], JSON.stringify(archive), 'utf8');
