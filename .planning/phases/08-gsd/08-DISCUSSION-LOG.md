@@ -26,3 +26,22 @@
 ## Deferred Ideas
 - GSD_PROJECT_ROOT 显式覆盖 → 后续 phase
 - 嵌套 .planning/ 处理 → 边缘情况暂缓
+
+## Round 2: Deep-dive
+
+### 4. 检测时机与缓存
+- **Question:** 每次调用都检测还是缓存？
+- **Options:** 每次全量 / 首次缓存 / 按需+mtime / 按需+深度上限
+- **Selected:** 按需检测 + 深度上限 5 层
+- **Notes:** 轻量 ls 每次调用，仅 intent 不明确（无单一 skill >0.8）时才解析文件
+
+### 5. YAML 解析方案
+- **Question:** 用什么解析 .md frontmatter？
+- **Options:** awk/sed / yq / node -e
+- **Selected:** node -e（跟 GSD 一致）
+- **Notes:** grep fallback
+
+### 6. 与 Step 1 融合
+- **Question:** GSD 上下文如何影响 intent parsing？
+- **Options:** 加权重 / 降低门槛
+- **Selected:** 加权重（role 匹配 +0.2），threshold 不变
