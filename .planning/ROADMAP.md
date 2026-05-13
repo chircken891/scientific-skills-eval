@@ -72,7 +72,14 @@ Plans:
 4. 非 GSD 项目环境下，调用日志仍正常记录（不包含 phase/plan 字段），产出写入默认位置
 5. invocation_log 累计增长时可被用于后续分析（如执行频次统计、常用 skill 排行）
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+
+```
+Plans:
+- [ ] 09-01-PLAN.md - gsd-context-detect.sh current_plan field (D-06 follow-up)
+- [ ] 09-02-PLAN.md - append-invocation-log.sh helper + tests + SKILL.md Step 5
+```
 
 ## Progress
 
