@@ -47,10 +47,10 @@ acquire_lock() {
     now=$(date +%s 2>/dev/null || node -e "console.log(Math.floor(Date.now()/1000))")
     lock_mtime=$(stat -c %Y "$LOCK_DIR" 2>/dev/null || node -e "
       try {
-        const s = require('fs').statSync('$LOCK_DIR');
+        const s = require('fs').statSync(process.argv[1]);
         console.log(Math.floor(s.mtimeMs/1000));
       } catch(e) { console.log(0); }
-    ")
+    " "$LOCK_DIR")
     if [ -n "$now" ] && [ -n "$lock_mtime" ] && [ $((now - lock_mtime)) -gt 10 ] 2>/dev/null; then
       rm -rf "$LOCK_DIR" 2>/dev/null || true
       # Attempt to acquire after removal — this may fail if another process
@@ -182,7 +182,7 @@ fi
 # Read, modify, write state file via node -e (single atomic operation inside lock)
 TRIGGER_JSON=$(node -e "
 const fs = require('fs');
-const state = JSON.parse(fs.readFileSync('$STATE_FILE', 'utf8'));
+const state = JSON.parse(fs.readFileSync(process.argv[9], 'utf8'));
 
 // Build D-01 entry
 const ts = new Date().toISOString();
@@ -213,10 +213,10 @@ if (state.invocation_log.length > $MAX_LOG) {
   state.invocation_log = state.invocation_log.slice(-$MAX_LOG);
   try {
     var archive = [];
-    try { archive = JSON.parse(fs.readFileSync('$ARCHIVE_FILE', 'utf8')); } catch(e) {}
+    try { archive = JSON.parse(fs.readFileSync(process.argv[10], 'utf8')); } catch(e) {}
     if (!Array.isArray(archive)) archive = [];
     archive.push.apply(archive, removed);
-    fs.writeFileSync('$ARCHIVE_FILE', JSON.stringify(archive), 'utf8');
+    fs.writeFileSync(process.argv[10], JSON.stringify(archive), 'utf8');
   } catch(e) {
     console.error('[WARN] Archive write failed: ' + e.message);
   }
@@ -225,7 +225,7 @@ if (state.invocation_log.length > $MAX_LOG) {
 // Sync counter = invocation_log.length per D-02
 state.counter = state.invocation_log.length;
 
-fs.writeFileSync('$STATE_FILE', JSON.stringify(state, null, 2), 'utf8');
+fs.writeFileSync(process.argv[9], JSON.stringify(state, null, 2), 'utf8');
 
 // Output trigger flags for caller
 var trig_rating = (state.counter % 10 === 0) && state.counter > 0;
@@ -239,7 +239,7 @@ console.log(JSON.stringify({rating: trig_rating, update_check: trig_update}));
   "$(node -e "console.log(JSON.stringify(process.argv[1]))" "$EXECUTION_SUMMARY")" \
   "$(node -e "console.log(JSON.stringify(process.argv[1]))" "$PHASE")" \
   "$(node -e "console.log(JSON.stringify(process.argv[1]))" "$PLAN")" \
-  "$DURATION_MS" || {
+  "$DURATION_MS" "$STATE_FILE" "$ARCHIVE_FILE" || {
     release_lock
     exit 1
   })
