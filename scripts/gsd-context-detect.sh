@@ -112,7 +112,7 @@ extract_section() {
     echo ""
     return
   fi
-  awk -v h="$header" 'BEGIN{found=0} $0 ~ "^## " h "$" || $0 ~ "^## " h " " {found=1; next} /^## /{found=0} found{print}' "$file" 2>/dev/null || echo ""
+  awk -v h="$header" 'BEGIN{found=0} index($0, "## " h) == 1 && (length($0) == length("## " h) || index($0, "## " h " ") == 1) {found=1; next} /^## /{found=0} found{print}' "$file" 2>/dev/null || echo ""
 }
 
 # ---- Helper: pipe stdin through node for JSON object parsing ----
@@ -154,6 +154,15 @@ CURRENT_POSITION=$(echo "$CURRENT_POSITION_RAW" | pipe_json '
   }
   return obj;
 ' '{}')
+
+# ---- D-06: Extract current_plan with null normalization ----
+CURRENT_PLAN=$(node -e "
+const cp = JSON.parse(process.argv[1]);
+const rawPlan = (cp && cp.plan) ? cp.plan.trim() : '';
+const nullValues = ['—', '-', '', 'none', 'tbd', 'not started'];
+const isNull = nullValues.includes(rawPlan.toLowerCase());
+console.log(JSON.stringify(isNull ? null : rawPlan));
+" "$CURRENT_POSITION" 2>/dev/null || echo 'null')
 
 # ---- Parse ROADMAP.md ----
 ROADMAP_FILE="$PLANNING_DIR/ROADMAP.md"
@@ -217,6 +226,7 @@ ARG_PROGRESS_TABLE="$PROGRESS_TABLE"
 ARG_PROJECT_CORE=$(json_str "$PROJECT_CORE")
 ARG_PROJECT_CONSTRAINTS=$(json_str "$PROJECT_CONSTRAINTS")
 ARG_CLAUDE_MD=$(json_str "$CLAUDE_CONTENT")
+ARG_CURRENT_PLAN="$CURRENT_PLAN"
 
 # ---- Build output JSON (D-10) ----
 OUTPUT_JSON=$(node -e "
@@ -230,7 +240,8 @@ const output = {
   progress_table: JSON.parse(process.argv[6]),
   project_core: JSON.parse(process.argv[7]),
   project_constraints: JSON.parse(process.argv[8]),
-  claude_md: JSON.parse(process.argv[9])
+  claude_md: JSON.parse(process.argv[9]),
+  current_plan: JSON.parse(process.argv[10])
 };
 console.log(JSON.stringify(output, null, 2));
 " \
@@ -242,7 +253,8 @@ console.log(JSON.stringify(output, null, 2));
   "$ARG_PROGRESS_TABLE" \
   "$ARG_PROJECT_CORE" \
   "$ARG_PROJECT_CONSTRAINTS" \
-  "$ARG_CLAUDE_MD"
+  "$ARG_CLAUDE_MD" \
+  "$ARG_CURRENT_PLAN"
 )
 
 echo "$OUTPUT_JSON"
