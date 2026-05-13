@@ -27,12 +27,12 @@
 - ✓ 生成最优组合方案（7核心 + 3扩展） — v1.0
 - ✓ 完成集成（scientific-do 协调器 + 8 SKILL.md 注册） — v1.0
 - ✓ 持续优化基础设施（验证脚本、更新检测、反馈收集、性能基准） — v1.0
+- ✓ **GSD-02**: 调用日志系统 — invocation_log 结构化记录每次执行（9字段, mkdir锁, 200截断+归档, 触发器）— v1.1
+- ✓ **GSD-03**: GSD 合规输出 — 执行结果写入 phase 目录的 SD-SUMMARY.md / SD-SUPPLEMENT.md — v1.1
 
 ### Active
 
 - [ ] **GSD-01**: GSD 项目上下文感知 — scientific-do 检测 `.planning/` 并读取 phase/plan 状态
-- [ ] **GSD-02**: 调用日志系统 — invocation_log 结构化记录每次执行
-- [ ] **GSD-03**: GSD 合规输出 — 执行结果写入 phase 目录的 SUMMARY.md 或 SUPPLEMENT.md
 - [ ] everything-claude-code 域识别路由集成（deferred — see STATE.md）
 
 ### Out of Scope
@@ -116,4 +116,4 @@
 
 ---
 
-*Last updated: 2026-05-13 — v1.0 retrospective completed (Key Decisions fully populated, RETROSPECTIVE.md created, MILESTONES.md repaired)*
+*Last updated: 2026-05-13 — v1.1 Phase 9 complete (invocation_log system + GSD compliance output delivered)*
