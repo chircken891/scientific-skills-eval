@@ -40,6 +40,25 @@ Scientific-Do is the central coordinator of the scientific-skills bundle, respon
 
 Analyze user input and active context to infer research intent proactively:
 
+**GSD Context Detection:**
+- Call `gsd-context-detect.sh --quick "$PWD"` for lightweight existence check (every invocation, per D-05)
+- Lightweight check traverses up to 5 levels from cwd, checks for `.planning/` directory
+- If `.planning/` found AND no single skill has confidence > 0.8 (intent ambiguous):
+  1. Call `gsd-context-detect.sh "$PWD"` (no --quick flag) for full context parsing
+  2. Parse the returned JSON: gsd_project_root, state, current_position, phases
+  3. Export GSD env vars for subprocess visibility:
+     - `GSD_PROJECT_ROOT` — from `gsd_project_root` field
+     - `GSD_PHASE_DIR` — from `current_position.phase` (if present)
+     - `GSD_CURRENT_PHASE` — from `current_position.phase` (if present)
+     - `GSD_PHASE_STATUS` — from `current_position.status` (if present)
+     - `GSD_MILESTONE` — from `state.milestone` (if present)
+  4. Apply confidence boost (D-07): if current phase number maps to a skill_registry.role, add +0.2 to that skill's confidence score
+  5. Do NOT lower the clarification threshold (remain at 0.6, D-07)
+- If `.planning/` found but confidence >= 0.8 (single high-confidence skill): skip full parsing, zero additional overhead (D-05)
+- If `.planning/` NOT found: proceed normally, no GSD context (D-04 graceful degradation)
+- On parse error: set `GSD_CONTEXT_ERROR` env var with error description, continue execution (D-04)
+- GSD context is a hint, not a hard rule — user may need cross-phase skills at any time (D-07)
+
 **Context Signals:**
 - File context: What files are open? (.R, .py, .md, .tex)
 - Working directory: Is the user in a research project directory?
