@@ -140,7 +140,7 @@ if(typeof s.version !== 'number') { console.log('version missing'); ok=false; }
 process.exit(ok?0:1);
 " || { echo "  FAIL: state structure invalid"; rm -rf "$tmpdir"; return 1; }
 
-  assert_eq "log has 1 entry" "1" "$(node -e "console.log(require('fs').readFileSync('$tmpdir/feedback-state.json','utf8').split('invocation_log')[1].split('timestamp').length-1)")" || { rm -rf "$tmpdir"; return 1; }
+  assert_eq "log has 1 entry" "1" "$(node -e "console.log(JSON.parse(require('fs').readFileSync('$tmpdir/feedback-state.json','utf8')).invocation_log.length)")" || { rm -rf "$tmpdir"; return 1; }
 
   rm -rf "$tmpdir"
   return 0
@@ -156,7 +156,7 @@ test_append() {
 
   # Verify 4 entries (3 + 1)
   local log_count
-  log_count=$(node -e "console.log(require('fs').readFileSync('$tmpdir/feedback-state.json','utf8').split('invocation_log')[1].split('timestamp').length-1)")
+  log_count=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$tmpdir/feedback-state.json','utf8')).invocation_log.length)")
   assert_eq "4 entries total" "4" "$log_count" || { rm -rf "$tmpdir"; return 1; }
 
   # Verify all 9 D-01 fields in the new entry
