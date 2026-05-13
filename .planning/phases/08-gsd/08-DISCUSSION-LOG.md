@@ -45,3 +45,20 @@
 - **Question:** GSD 上下文如何影响 intent parsing？
 - **Options:** 加权重 / 降低门槛
 - **Selected:** 加权重（role 匹配 +0.2），threshold 不变
+
+## Round 3: Gap Closure
+
+### 7. CLAUDE.md
+- **Question:** 是否读取项目级 CLAUDE.md？
+- **Options:** 读 / 不读
+- **Selected:** 读，纳入 context signals
+
+### 8. 实现形态
+- **Question:** 检测逻辑写在哪？
+- **Options:** 独立 helper 脚本 / 直接内嵌 SKILL.md
+- **Selected:** 独立 gsd-context-detect.sh
+
+### 9. 输出格式
+- **Question:** 如何传递给 scientific-do？
+- **Options:** env var / JSON stdout（GSD 方式）
+- **Selected:** JSON stdout，跟 GSD CLI 一致
