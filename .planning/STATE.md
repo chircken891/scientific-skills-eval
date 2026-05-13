@@ -28,7 +28,7 @@ Items acknowledged and deferred at v1.0 milestone close on 2026-05-12:
 | Category | Item | Status |
 |----------|------|--------|
 | verification_gap | Phase 01.5 — VS Code marketplace search not executed (tools unavailable) | gaps_found |
-| todo | everything-claude-code 域识别路由集成 | pending |
+| todo | everything-claude-code 域识别路由集成 | resolved (Phase 09.1) |
 
 ## Current Position
 
@@ -43,26 +43,20 @@ Last activity: 2026-05-13 — Milestone v1.1 completed and archived
 |--------|-------|
 | v1.0 phases shipped | 10 |
 | v1.0 plans executed | 26 |
-| v1.0 tasks completed | 24 |
-| v1.1 phases planned | 2 |
-| v1.1 plans planned | 0 |
+| v1.1 phases shipped | 3 |
+| v1.1 plans executed | 5 |
 
 ## Accumulated Context
 
 **Key design decisions (v1.0):**
-
 - GSD 做外层调度，scientific-do 做执行引擎 — 不重复造轮子
 - 安全一票否决制已落地
 - 两阶段评估架构已验证有效
 
-**Key constraint for v1.1:**
-
-- 不替换 GSD 调度器，scientific-do 是执行引擎
-- GSD 上下文读取不应侵入 scientific-do 核心路由逻辑
-
-**Next action:**
-
-- Plan Phase 8 (GSD context detection) via `/gsd-plan-phase 8`
+**Key design decisions (v1.1):**
+- GSD 上下文检测通过 gsd-context-detect.sh 外挂脚本，不侵入 scientific-do 核心路由
+- invocation_log 写入由 append-invocation-log.sh 集中处理（原子锁 + 归档 + 触发器）
+- everything-claude-code 通过 domain gate 轻量集成，不合并路由表
 
 ## Operator Next Steps
 
