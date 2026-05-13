@@ -36,10 +36,14 @@ DURATION_MS="${8:-0}"
 
 # --- acquire_lock: mkdir-based concurrency lock with stale guard ---
 acquire_lock() {
-  # Stale lock guard: if lock dir exists and mtime > 10s, remove it
+  # Try fast path first
+  if mkdir "$LOCK_DIR" 2>/dev/null; then
+    return 0
+  fi
+
+  # Check for stale lock only if fast path failed
   if [ -d "$LOCK_DIR" ]; then
-    local now
-    local lock_mtime
+    local now lock_mtime
     now=$(date +%s 2>/dev/null || node -e "console.log(Math.floor(Date.now()/1000))")
     lock_mtime=$(stat -c %Y "$LOCK_DIR" 2>/dev/null || node -e "
       try {
@@ -47,16 +51,20 @@ acquire_lock() {
         console.log(Math.floor(s.mtimeMs/1000));
       } catch(e) { console.log(0); }
     ")
-    if [ $(( now - lock_mtime )) -gt 10 ] 2>/dev/null; then
+    if [ -n "$now" ] && [ -n "$lock_mtime" ] && [ $((now - lock_mtime)) -gt 10 ] 2>/dev/null; then
       rm -rf "$LOCK_DIR" 2>/dev/null || true
+      # Attempt to acquire after removal — this may fail if another process
+      # created the lock between removal and mkdir, which is handled by the retry loop
+      mkdir "$LOCK_DIR" 2>/dev/null && return 0
     fi
   fi
 
-  for i in $(seq 1 $RETRIES); do
+  # Retry with backoff
+  for i in $(seq 2 $RETRIES); do
+    sleep $RETRY_DELAY
     if mkdir "$LOCK_DIR" 2>/dev/null; then
       return 0
     fi
-    [ $i -lt $RETRIES ] && sleep $RETRY_DELAY
   done
   echo "[WARN] Could not acquire lock after $RETRIES retries" >&2
   return 1
@@ -112,8 +120,12 @@ write_gsd_output() {
   local output_file="$phase_dir/$filename"
 
   # Validate output path is under GSD_PROJECT_ROOT/.planning/phases/
-  local output_norm="${output_file//\\//}"
-  local prefix_norm="${GSD_PROJECT_ROOT//\\//}/.planning/phases/"
+  # Resolve to canonical path to block directory traversal
+  local output_dir output_norm prefix_norm
+  output_dir=$(dirname "$output_file" 2>/dev/null)
+  output_norm=$(cd "$output_dir" 2>/dev/null && pwd -P)/$(basename "$output_file") || output_norm="${output_file//\\//}"
+  output_norm="${output_norm//\\//}"
+  prefix_norm="${GSD_PROJECT_ROOT//\\//}/.planning/phases/"
 
   case "$output_norm" in
     ${prefix_norm}*)
