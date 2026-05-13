@@ -34,6 +34,19 @@ Scientific-Do is the central coordinator of the scientific-skills bundle, respon
 - When multiple skills need to collaborate
 - When encountering skill selection conflicts
 
+## What This Does NOT Handle
+
+scientific-do 专注于科研工作流：文献检索、数据分析、论文写作、图表生成、投稿润色、医学研究。
+
+以下请求不在能力范围内，请直接使用 Claude Code 或 everything-claude-code：
+
+- **软件开发任务:** 写 API、前端页面、后端逻辑、数据库设计、Docker 部署
+- **安全审计:** 渗透测试、漏洞扫描、安全策略评估
+- **DevOps / CI/CD:** 持续集成配置、部署管道、监控告警
+- **非科研通用问答:** 非学术领域的技术问题
+
+**everything-claude-code 集成 (D-21):** 200+ 通用开发 skills 已安装（`~/.claude/skills/everything-claude-code/`），覆盖 FastAPI、Django、React、Docker、安全审计、TDD 等。scientific-do 检测到非科学请求时自动引导到 everything-claude-code。
+
 ## Process
 
 ### 1. Proactive Intent Parsing (D-04)
@@ -169,21 +182,35 @@ After each scientific-do orchestration cycle, run a lightweight verification:
 - HARD gate failure → HALT execution, report to user, request correction
 - SOFT gate failure → Log warning, continue execution, flag for user review
 
-**Usage Tracking (D-14, D-15):**
+**Invocation Logging and GSD Output (D-01 through D-05, D-14):**
 
-After verification, increment the feedback counter:
-- Read `~/.claude/scientific-skills/feedback-state.json` counter
-- Only count substantive orchestrations (>= 2 skill calls OR >= 30s execution time)
-- Increment by 1 for matching orchestrations
-- Write updated counter back to file
+After verification, record the invocation:
 
-**Counter trigger (every 10):**
-If counter >= 10 after increment:
-1. Reset counter to 0
-2. Prompt user: "Research Workflow Feedback: Please rate the last 10 research orchestrations (1-5):"
-3. Collect optional text comment
-4. Run update check for all installed skills (see update-check.sh)
-5. Save rating + comment + timestamp to feedback-state.json ratings array
+1. **Calculate duration:** duration_ms = difference between Step 1 start time and current time.
+   - Record start_time at Step 1 beginning: `START_TIME=$(node -e "console.log(Date.now())")`
+   - At Step 5: `duration_ms=$(node -e "console.log(Date.now() - START_TIME)")`
+
+2. **Build entry fields** from execution context:
+   - intent, routed_skill, status (success/failure/partial/gap_detected)
+   - error_summary (only when status != success)
+   - execution_summary (single line)
+   - phase from `$GSD_CURRENT_PHASE` env var
+   - plan from `gsd-context-detect.sh` current_plan field
+   - duration_ms from Step 1
+
+3. **Call the helper script** (handles all filesystem I/O atomically):
+   ```bash
+   bash ~/.claude/scientific-skills/scripts/append-invocation-log.sh "$intent" "$routed_skill" "$status" "$error_summary" "$execution_summary" "$phase" "$plan" "$duration_ms"
+   ```
+   Capture stdout as TRIGGERS.
+
+4. **Parse trigger flags** from TRIGGERS JSON:
+   - RATING_TRIGGER = TRIGGERS.rating
+   - UPDATE_TRIGGER = TRIGGERS.update_check
+
+5. **Handle triggers:**
+   - If RATING_TRIGGER == true: Prompt 1-5 rating, collect comment, save to ratings array
+   - If UPDATE_TRIGGER == true: Run update check for all skills, present summary (no auto-update)
 
 ## Integration
 
