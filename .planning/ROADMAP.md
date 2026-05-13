@@ -53,8 +53,8 @@
 
 ```
 Plans:
-- [ ] 08-01-PLAN.md — gsd-context-detect.sh 核心实现（检测+解析+测试框架）
-- [ ] 08-02-PLAN.md — scientific-do Step 1 集成（GSD 信号、置信度增强、环境变量）
+- [x] 08-01-PLAN.md — gsd-context-detect.sh 核心实现（检测+解析+测试框架）
+- [x] 08-02-PLAN.md — scientific-do Step 1 集成（GSD 信号、置信度增强、环境变量）
 ```
 
 ### Phase 9: 调用追踪与 GSD 合规产出
