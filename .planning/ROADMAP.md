@@ -78,7 +78,7 @@ Plans:
 ```
 Plans:
 - [x] 09-01-PLAN.md - gsd-context-detect.sh current_plan field (D-06 follow-up)
-- [ ] 09-02-PLAN.md - append-invocation-log.sh helper + tests + SKILL.md Step 5
+- [x] 09-02-PLAN.md - append-invocation-log.sh helper + tests + SKILL.md Step 5
 ```
 
 ## Progress
