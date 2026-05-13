@@ -2,15 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: GSD-scientific集成协议
-status: roadmap_defined
-last_updated: "2026-05-13T00:40:00.000Z"
-last_activity: 2026-05-13
+status: planning
+last_updated: "2026-05-13T00:41:34.224Z"
+last_activity: 2026-05-13 — v1.1 roadmap created (Phase 8 + Phase 9)
 progress:
-  total_phases: 2
+  total_phases: 1
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
-  percent: 0
 ---
 
 # 项目状态
@@ -50,15 +49,18 @@ Last activity: 2026-05-13 — v1.1 roadmap created (Phase 8 + Phase 9)
 ## Accumulated Context
 
 **Key design decisions (v1.0):**
+
 - GSD 做外层调度，scientific-do 做执行引擎 — 不重复造轮子
 - 安全一票否决制已落地
 - 两阶段评估架构已验证有效
 
 **Key constraint for v1.1:**
+
 - 不替换 GSD 调度器，scientific-do 是执行引擎
 - GSD 上下文读取不应侵入 scientific-do 核心路由逻辑
 
 **Next action:**
+
 - Plan Phase 8 (GSD context detection) via `/gsd-plan-phase 8`
 
 ## Operator Next Steps
