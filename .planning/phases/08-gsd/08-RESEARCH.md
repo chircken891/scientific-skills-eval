@@ -423,17 +423,15 @@ BOOST_MAP='{
 | A1 | `node -e` inline parsing handles all GSD frontmatter structures (nested objects, array fields) | YAML Parsing | Malformed output for complex frontmatter; fall back to grep field-level extraction |
 | A2 | ROADMAP.md detail sections always follow `## Phase N: Name` pattern | Common Pitfalls | If future ROADMAP uses `###` instead of `##`, grep pattern fails; add regex flexibility |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Where should `gsd-context-detect.sh` live?**
+1. **Where should `gsd-context-detect.sh` live?** (RESOLVED)
    - What we know: D-09 says standalone script in scientific-skills. Current `.sh` files live in phase-specific directories (e.g., `.planning/phases/07/scripts/`). But this is a shared infrastructure script, not phase-specific.
-   - What's unclear: Should it be `~/.claude/scientific-skills/scripts/gsd-context-detect.sh` (new shared scripts dir) or alongside SKILL.md (`~/.claude/scientific-skills/skills/scientific-do/gsd-context-detect.sh`)?
-   - Recommendation: Create `~/.claude/scientific-skills/scripts/` directory, co-located with the existing `skills/` and config/state files. This keeps it separate from skill-specific code and makes it discoverable for Phase 9 reuse.
+   - Resolution: Create `~/.claude/scientific-skills/scripts/` directory, co-located with the existing `skills/` and config/state files. This keeps it separate from skill-specific code and makes it discoverable for Phase 9 reuse.
 
-2. **ROADMAP.md section boundary detection for v1.0 shipped phases with no detail header**
+2. **ROADMAP.md section boundary detection for v1.0 shipped phases with no detail header** (RESOLVED)
    - What we know: v1.0 phases are in a collapsed `<details>` block with only checklist items, no `## Phase N:` detail sections. Phase 8-9 (v1.1) have detail sections.
-   - What's unclear: For the v1.0 phases, the only completion indicator is the checkbox `- [x]` and the Progress table. Should the script parse both structures?
-   - Recommendation: Parse detail sections (via `## Phase N:`) when present, fall back to checkbox status. The Progress table provides authoritative completion data for all phases.
+   - Resolution: Parse detail sections (via `## Phase N:`) when present, fall back to checkbox status. The Progress table provides authoritative completion data for all phases.
 
 ## Environment Availability
 
