@@ -1,0 +1,230 @@
+---
+name: scientific-do
+description: "Use when starting a research task, making research decisions, or needing to coordinate multiple research skills. Central coordinator for the scientific-skills bundle."
+version: 2
+triggers:
+  keywords:
+    - "research task"
+    - "科研任务"
+    - "coordinate skills"
+    - "research workflow"
+    - "scientific research"
+  scenarios:
+    - "multi-skill research workflow"
+    - "coordinated literature-write-polish pipeline"
+  exclude_when:
+    - "single-skill task that directly matches a core skill"
+    - "non-research general question"
+model: claude-sonnet-4-20250514
+---
+
+# Scientific-Do: Central Coordinator
+
+## Overview
+
+Scientific-Do is the central coordinator of the scientific-skills bundle, responsible for:
+- Intent parsing: Identify user research intent
+- Skill routing: Select appropriate skills
+- Dependency chain orchestration: Determine execution order
+- Conflict handling: Resolve multi-skill conflicts
+
+## When to Use
+
+- When user describes a research task
+- When multiple skills need to collaborate
+- When encountering skill selection conflicts
+
+## What This Does NOT Handle
+
+scientific-do 专注于科研工作流：文献检索、数据分析、论文写作、图表生成、投稿润色、医学研究。
+
+以下请求不在能力范围内，请直接使用 Claude Code 或 everything-claude-code：
+
+- **软件开发任务:** 写 API、前端页面、后端逻辑、数据库设计、Docker 部署
+- **安全审计:** 渗透测试、漏洞扫描、安全策略评估
+- **DevOps / CI/CD:** 持续集成配置、部署管道、监控告警
+- **非科研通用问答:** 非学术领域的技术问题
+
+**everything-claude-code 集成 (D-21):** 200+ 通用开发 skills 已安装（`~/.claude/skills/everything-claude-code/`），覆盖 FastAPI、Django、React、Docker、安全审计、TDD 等。scientific-do 检测到非科学请求时自动引导到 everything-claude-code。
+
+## Process
+
+### 1. Proactive Intent Parsing (D-04)
+
+Analyze user input and active context to infer research intent proactively:
+
+**GSD Context Detection:**
+- Call `gsd-context-detect.sh --quick "$PWD"` for lightweight existence check (every invocation, per D-05)
+- Lightweight check traverses up to 5 levels from cwd, checks for `.planning/` directory
+- If `.planning/` found AND no single skill has confidence > 0.8 (intent ambiguous):
+  1. Call `gsd-context-detect.sh "$PWD"` (no --quick flag) for full context parsing
+  2. Parse the returned JSON: gsd_project_root, state, current_position, phases
+  3. Export GSD env vars for subprocess visibility:
+     - `GSD_PROJECT_ROOT` — from `gsd_project_root` field
+     - `GSD_PHASE_DIR` — from `current_position.phase` (if present)
+     - `GSD_CURRENT_PHASE` — from `current_position.phase` (if present)
+     - `GSD_PHASE_STATUS` — from `current_position.status` (if present)
+     - `GSD_MILESTONE` — from `state.milestone` (if present)
+  4. Apply confidence boost (D-07): if current phase number maps to a skill_registry.role, add +0.2 to that skill's confidence score
+  5. Do NOT lower the clarification threshold (remain at 0.6, D-07)
+- If `.planning/` found but confidence >= 0.8 (single high-confidence skill): skip full parsing, zero additional overhead (D-05)
+- If `.planning/` NOT found: proceed normally, no GSD context (D-04 graceful degradation)
+- On parse error: set `GSD_CONTEXT_ERROR` env var with error description, continue execution (D-04)
+- GSD context is a hint, not a hard rule — user may need cross-phase skills at any time (D-07)
+
+**Phase-to-Role Confidence Boost (D-07):**
+- Role mapping from `scientific-skills-config.json` `skill_registry`:
+  | GSD Phase Domain | skill_registry.role | Affected Skills |
+  |-----------------|---------------------|-----------------|
+  | literature_search | literature_search | deepxiv_sdk |
+  | paper_analysis | paper_analysis | academic-paper-analysis |
+  | data_analysis | data_analysis | scientific-agent-skills |
+  | paper_writing | paper_writing | academic-writing-skills |
+  | figure_generation | figure_generation | paper-plot-skills |
+  | submission_polish | submission_polish | Paper-Polish-Workflow-skill |
+  | medical_research | medical_research | medsci-skills |
+- When GSD context has a `current_phase` value that maps to a domain above:
+  - Read the current phase's description/name from the GSD output
+  - Match against the domain column (e.g., Phase focused on "literature" → literature_search)
+  - Add +0.2 to the confidence score of all skills with that role
+- The boost increases the skill's rank in the matching priority but does NOT force routing
+- Clarification threshold remains at 0.6 (unchanged by GSD context)
+
+**Context Signals:**
+- File context: What files are open? (.R, .py, .md, .tex)
+- Working directory: Is the user in a research project directory?
+- Conversation history: Previous research stages completed?
+- User's active research stage (if set in workspace context)
+
+**Extraction:**
+- Research stage: literature / analysis / writing / polishing / medical
+- Task type: search / analyze / visualize / write / polish / validate
+- Confidence score: 0.0-1.0 (based on keyword + context match)
+- Trigger keywords: Match against all registered skill triggers
+
+**Domain pre-filter:**
+- Use ECC's domain classification as first gate (scientific vs non-scientific)
+- Only route to scientific-do if confidence > 0.6
+- On low confidence (< 0.6): ask user for clarification before routing
+
+### 2. Structured Skill Routing (D-03, D-19, D-20)
+
+Route to the best matching skill using structured trigger fields from all registered skills:
+
+**Matching Priority (D-20: no preset priority — match by scenario):**
+
+1. **Core skill exact match**: User input matches a skill's `triggers.keywords` or `triggers.scenarios`
+   - Read `triggers` field from each core skill's SKILL.md frontmatter
+   - Score: 1 point per keyword match, 3 points per scenario match
+   - Select skill with highest score
+
+2. **Extension pool check (D-19)**: If no core skill scores >= 2:
+   - Check extension skills at `~/.claude/skills-extensions/` for trigger matches
+   - If extension matches with score >= 2: activate on-demand
+   - Activation: Add extension skill path to search scope (no symlink needed — just include in matching)
+
+3. **Fuzzy fallback**: Partial keyword match against skill description
+   - Score by word overlap ratio
+   - Threshold: > 30% word overlap
+
+4. **Smart tuning**: Context + user preference + historical usage
+   - Prefer skills used more frequently in this session
+   - Prefer skills matching current research stage
+
+5. **Exclude check**: If the task matches a skill's `exclude_when` conditions, skip it even on keyword match
+
+**Gap Detection (D-09):**
+
+If all routing stages (1-4) fail to match any skill with score >= 1:
+1. Log the gap: Record the user's request, context, and attempted matches
+2. Notify user: "Current skill bundle has no skill that matches this task."
+3. Offer discovery: "Would you like to search GitHub for candidate skills?"
+   - If user confirms: Run `bash .planning/phases/07-持续优化/scripts/skill-discovery.sh`
+   - Discovery script results provide candidate repos for Phase 2 evaluation
+4. Record gap in feedback-state.json under a `gaps` array:
+   ```json
+   {
+     "gaps": [
+       {
+         "timestamp": "...",
+         "request": "user request summary",
+         "stage": "research/analysis/writing/polishing",
+         "attempted_skills": ["skill1", "skill2"]
+       }
+     ]
+   }
+   ```
+
+### 3. Dependency Chain Orchestration
+
+Determine execution order:
+- Literature search → Analysis design → Execute analysis → Paper writing → Figure generation → Polish for submission
+- HARD-GATE: research before planning, design before writing, confirm before execution
+
+### 4. Conflict Handling (Per D-18)
+
+When multiple skills compete:
+- Context priority: Current task context
+- User preference: User's settings in config
+- Historical usage: Usage frequency statistics
+
+### 5. Post-Action Verification Closure (D-05)
+
+After each scientific-do orchestration cycle, run a lightweight verification:
+
+**Verification Gates:**
+- [ ] GATE 1: Is the literature reviewed before planning/analysis? (HARD)
+- [ ] GATE 2: Is the methodology designed before writing? (HARD)
+- [ ] GATE 3: Are figures derived from completed analysis? (SOFT — warn but proceed)
+- [ ] GATE 4: Is the output consistent with the requested research stage? (SOFT)
+
+**Gate Responses:**
+- HARD gate failure → HALT execution, report to user, request correction
+- SOFT gate failure → Log warning, continue execution, flag for user review
+
+**Invocation Logging and GSD Output (D-01 through D-05, D-14):**
+
+After verification, record the invocation:
+
+1. **Calculate duration:** duration_ms = difference between Step 1 start time and current time.
+   - Record start_time at Step 1 beginning: `START_TIME=$(node -e "console.log(Date.now())")`
+   - At Step 5: `duration_ms=$(node -e "console.log(Date.now() - START_TIME)")`
+
+2. **Build entry fields** from execution context:
+   - intent, routed_skill, status (success/failure/partial/gap_detected)
+   - error_summary (only when status != success)
+   - execution_summary (single line)
+   - phase from `$GSD_CURRENT_PHASE` env var
+   - plan from `gsd-context-detect.sh` current_plan field
+   - duration_ms from Step 1
+
+3. **Call the helper script** (handles all filesystem I/O atomically):
+   ```bash
+   bash ~/.claude/scientific-skills/scripts/append-invocation-log.sh "$intent" "$routed_skill" "$status" "$error_summary" "$execution_summary" "$phase" "$plan" "$duration_ms"
+   ```
+   Capture stdout as TRIGGERS.
+
+4. **Parse trigger flags** from TRIGGERS JSON:
+   - RATING_TRIGGER = TRIGGERS.rating
+   - UPDATE_TRIGGER = TRIGGERS.update_check
+
+5. **Handle triggers:**
+   - If RATING_TRIGGER == true: Prompt 1-5 rating, collect comment, save to ratings array
+   - If UPDATE_TRIGGER == true: Run update check for all skills, present summary (no auto-update)
+
+## Integration
+
+**Requires skills:**
+- deepxiv_sdk
+- academic-paper-analysis
+- scientific-agent-skills
+- academic-writing-skills
+- paper-plot-skills
+- Paper-Polish-Workflow-skill
+- medsci-skills
+
+**HARD-GATE nodes:**
+- 规划前必须研究 (Research before planning)
+- 写作前必须设计 (Design before writing)
+- 执行前必须确认 (Confirm before execution)
+- 完成后必须验证 (Verify after completion)

@@ -1,0 +1,15 @@
+{
+  "name": "scientific-skills",
+  "version": "1.0.0",
+  "author": "Research Team",
+  "description": "Complete scientific research workflow for Claude Code",
+  "skills": [
+    "deepxiv_sdk",
+    "academic-paper-analysis",
+    "scientific-agent-skills",
+    "academic-writing-skills",
+    "paper-plot-skills",
+    "Paper-Polish-Workflow-skill",
+    "medsci-skills"
+  ]
+}

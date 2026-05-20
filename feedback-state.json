@@ -1,0 +1,50 @@
+{
+  "counter": 0,
+  "last_feedback_at": null,
+  "last_update_check_at": null,
+  "ratings": [],
+  "skill_states": {
+    "deepxiv_sdk": {
+      "last_known_sha": null,
+      "updated_at": null
+    },
+    "academic-paper-analysis": {
+      "last_known_sha": null,
+      "updated_at": null
+    },
+    "scientific-agent-skills": {
+      "last_known_sha": null,
+      "updated_at": null
+    },
+    "academic-writing-skills": {
+      "last_known_sha": null,
+      "updated_at": null
+    },
+    "paper-plot-skills": {
+      "last_known_sha": null,
+      "updated_at": null
+    },
+    "Paper-Polish-Workflow-skill": {
+      "last_known_sha": null,
+      "updated_at": null
+    },
+    "medsci-skills": {
+      "last_known_sha": null,
+      "updated_at": null
+    },
+    "nature-skills": {
+      "last_known_sha": null,
+      "updated_at": null
+    },
+    "claude-scholar": {
+      "last_known_sha": null,
+      "updated_at": null
+    },
+    "scientify": {
+      "last_known_sha": "c7c3efc0f048c3f540cf1f6f1dda9aeaa76c783f",
+      "updated_at": 1778580990.577064
+    }
+  },
+  "version": 1,
+  "gaps": []
+}
