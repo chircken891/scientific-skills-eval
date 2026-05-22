@@ -79,29 +79,36 @@ For installed skills: check in-place.
 
 ### Step 3: Tier 1 — Professional Depth Scoring
 
-Load the corresponding rubric table from `references/` for each function type. Score 1-5 for each function. Average = DepthScore.
+**This is done by the LLM using the rubric files.** The scripts handle data gathering and security; the LLM assigns actual scores.
+
+Load the corresponding rubric table from `references/rubric-{function-type}.md` for each function type. Then:
+
+1. **Read the rubric** — Understand the 5/5 ideal vs what disqualifies at each level
+2. **Examine evidence** — Concrete code, tests, working examples, detailed docs (not marketing claims)
+3. **Assign 1-5 score** — Which rubric level best matches what the skill actually demonstrates?
+4. **Calculate DepthScore** — `average(Function1_Score, Function2_Score)` (0.25 rounds up)
+
+**Read also:** `references/scoring-guide.md` — detailed scoring pitfalls, rounding rules, and process guidance.
 
 ```
-DepthScore = average(Function1_Score, Function2_Score)
-(if 1 function only: DepthScore = Function1_Score)
-```
-
-**Scoring rules:**
+Scoring rules:
 - Select the 1-2 functions where the skill shows the strongest evidence (concrete code, tests, working examples, detailed docs)
 - Specialization is a feature, not a bug — don't penalize for narrow focus
 - Score based on observable artifacts, not marketing claims
+- Use increments of 0.5 (1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0)
+```
 
 ### Step 4: Tier 2 — Integration Assessment
 
-Five descriptive 1-5 scores (not used for threshold classification):
+After Tier 1 scoring, assess integration dimensions (1-5 each, descriptive only, NOT used for classification):
 
-| Dimension | What |
-|-----------|------|
-| Integration难度 | How hard to integrate into scientific-skills bundle |
-| MCP兼容 | Compatibility with MCP tools and protocols |
-| 冲突风险 | Risk of conflicting with existing skills |
-| 维护成本 | Ongoing maintenance burden |
-| 上下文依赖 | Context dependency (does it need specific project state) |
+| Dimension | 1 (easy) | 5 (hard) |
+|-----------|----------|----------|
+| 集成难度 | Drop-in, no config needed | Major refactor required |
+| MCP兼容 | Standard MCP protocols | Proprietary/custom |
+| 冲突风险 | Isolated, no overlap | High overlap with existing skills |
+| 维护成本 | Self-contained | Many external dependencies |
+| 上下文依赖 | Stateless | Requires specific project state |
 
 ### Step 5: Classification
 
@@ -202,5 +209,5 @@ python scripts/evaluate.py --local ./skills/my-skill --mode full --functions "Li
 python scripts/batch.py --input skills-to-evaluate.tsv --output ./results/
 
 # Security check only
-python scripts/security_check.sh ./skills/my-skill
+python scripts/security_check.py ./skills/my-skill
 ```
