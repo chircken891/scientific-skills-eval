@@ -1,6 +1,6 @@
 ---
 name: scientific-skill-eval
-description: Systematically evaluate academic and research Claude Code skills through a two-stage assessment (security veto + professional depth scoring). Use when asked to evaluate, assess, score, or review a scientific skill — including "evaluate this skill", "assess https://github.com/...", "rate this research skill", "skill quality review", "run full evaluation". Triggers on evaluation requests for literature search, academic writing, statistical analysis, medical research, citation management, figure generation, and related research tool skills. Does NOT trigger for general code review or non-research skills.
+description: Systematically evaluate academic and research Claude Code skills through a two-stage assessment (security veto + professional depth scoring). Use this skill whenever the user wants to judge, score, rate, assess, or audit any research-oriented Claude Code skill — whether they say "evaluate this skill", "对这个skill打分", "评测一下这个", "assess https://github.com/...", "rate this research tool", "skill quality check", "run full evaluation", "批量评测", "科研skill质量评估", or similar. Also triggers when the user asks whether a skill is good enough, whether to install it, what its depth score is, or whether it passes security checks. Does NOT trigger for general code review requests unrelated to research skills, or for evaluating non-scientific tools.
 allowed-tools: Read Write Edit Bash Grep Glob
 license: MIT license
 metadata:
