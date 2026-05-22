@@ -24,7 +24,13 @@ const SKILL_MAP: Record<string, string[]> = {
   '论文写作': ['academic-writing-skills'],
   '图表生成': ['paper-plot-skills'],
   '投稿润色': ['Paper-Polish-Workflow-skill'],
-  '医学专项': ['medsci-skills']
+  '医学专项': ['medsci-skills'],
+  'skill评测': ['scientific-skill-eval'],
+  'skill评估': ['scientific-skill-eval'],
+  'skill打分': ['scientific-skill-eval'],
+  'skill质量': ['scientific-skill-eval'],
+  '科研工具评测': ['scientific-skill-eval'],
+  '批量评测': ['scientific-skill-eval']
 };
 
 export function routeSkill(intent: Intent): RouteResult {
