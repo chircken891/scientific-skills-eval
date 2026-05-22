@@ -1,0 +1,27 @@
+{
+  "skill_name": "scientific-skill-eval",
+  "version": "1.0.0",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "评测 medsci-skills 这个 skill，打分并输出报告",
+      "expected_output": "Security check results + DepthScore + Classification in markdown format",
+      "files": [],
+      "assertions": []
+    },
+    {
+      "id": 2,
+      "prompt": "对 https://github.com/K-Dense-AI/scientific-agent-skills 进行完整评测，输出JSON格式",
+      "expected_output": "Full JSON output with all 22 fields including security, Tier1 scores, Tier2 integration, classification",
+      "files": [],
+      "assertions": []
+    },
+    {
+      "id": 3,
+      "prompt": "批量评测这组skills: deepxiv_sdk, paper-plot-skills, citation-management。输出到 ./eval-results/",
+      "expected_output": "summary.md + summary.tsv + individual reports for each skill",
+      "files": [],
+      "assertions": []
+    }
+  ]
+}
