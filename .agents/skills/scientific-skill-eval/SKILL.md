@@ -149,14 +149,19 @@ Optional flags:
 
 **Verdict:** {PASS / FAIL — immediate EXCLUDE if any FAIL}
 
+**Security Detail:** (only if FAIL)
+```
+[check_name] | [file:line evidence] | [impact on research workflow]
+```
+
 ## Professional Depth Score (Tier 1)
 
 | Function | Score (1-5) | Rubric Evidence |
 |----------|-------------|----------------|
-| {Function1} | {score} | {brief evidence} |
-| {Function2} | {score} | {brief evidence} |
+| {Function1} | {score} | {specific code/doc evidence that justifies this score} |
+| {Function2} | {score} | {specific code/doc evidence} |
 
-**DepthScore:** {value}
+**DepthScore:** {value} (average of above, rounded to nearest 0.5)
 
 ## Integration Assessment (Tier 2)
 
@@ -170,25 +175,41 @@ Optional flags:
 
 ## Coverage
 
-**Stages covered:** {research / analysis / writing / submission / polish}
-**Description:** {free text}
+**Stages covered:** research / analysis / writing / submission / polish (list which apply)
+**Functions detected:** {inferred from SKILL.md and code structure}
+**Specialization:** {narrow-and-deep vs broad-but-shallow assessment}
 
 ## Classification
 
 **Result:** {AUTO-RECOMMEND / CANDIDATE / EXCLUDE}
 
-**Exclusion Reason:** (only if EXCLUDE)
-{check} | {evidence} | {impact}
+| Threshold | Result | Meaning |
+|-----------|--------|---------|
+| DepthScore < 3.0 | EXCLUDE | Does not meet minimum quality bar |
+| 3.0 ≤ DepthScore ≤ 4.0 | CANDIDATE | Suitable but not exceptional |
+| DepthScore > 4.0 | AUTO-RECOMMEND | Strong candidate for scientific-skills bundle |
+
+**Exclusion Reason:** (only if EXCLUDE — three-field format)
+```
+[check_name] | [specific evidence] | [impact on medical/research workflow]
+```
 ```
 
 ## Batch Mode Input Format (TSV)
+
+See `examples/batch-input-example.tsv` for a ready-to-use template.
 
 ```tsv
 Repo	Domain
 https://github.com/user/skill1	Literature Search
 https://github.com/user/skill2	Medical Research
 ./local/skill3	Statistical Analysis
+skill-name	Academic Writing
 ```
+
+Columns:
+- **Repo**: GitHub URL, local path ( `./`), or installed skill name
+- **Domain**: Primary function type (used to select rubric; optional in quick mode)
 
 ## Batch Mode Output
 
